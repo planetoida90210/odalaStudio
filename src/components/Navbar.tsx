@@ -1,9 +1,9 @@
-import { UrlObject } from "url";
 import { LucideShoppingBag } from "lucide-react";
 import Link from "next/link";
-import { ActiveLink } from "@/components/ActiveLink";
 
 import { Button } from "@/components/ui/button";
+import { ActiveLink } from "@/components/ActiveLink";
+import { SearchInput } from "@/components/SearchInput";
 
 const numOfItemsInBag = 0;
 
@@ -15,6 +15,7 @@ export const Navbar = () => {
 					Odala Studio
 				</span>
 			</Link>
+			<SearchInput />
 			<ul className="flex items-center gap-4" role="navigation">
 				<ActiveLink
 					href={"/"}
