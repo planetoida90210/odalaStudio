@@ -26,6 +26,7 @@ export const SearchInput = () => {
 	return (
 		<Input
 			placeholder="Szukaj..."
+			value={searchTerm}
 			type="search"
 			onChange={handleChange}
 			className="hidden md:block"
