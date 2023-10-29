@@ -28,6 +28,7 @@ export const Navbar = () => {
 					href={"/products"}
 					className="border-b-2 border-b-transparent text-lg"
 					activeClassName="border-b-2 border-zinc-900 text-lg font-semibold"
+					exact={false}
 				>
 					Wszystko
 				</ActiveLink>

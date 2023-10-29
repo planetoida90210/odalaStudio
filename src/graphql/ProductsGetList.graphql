@@ -1,14 +1,14 @@
-query ProductsGetList {
-	products(first: 10) {
+query ProductsGetList($first: Int, $skip: Int) {
+	products(first: $first, skip: $skip) {
 		id
 		name
 		description
-		categories(first: 1) {
+		price
+		categories {
 			name
 		}
-		images(first: 1) {
+		images {
 			url
 		}
-		price
 	}
 }
