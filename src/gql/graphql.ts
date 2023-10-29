@@ -10728,6 +10728,14 @@ export type _SystemDateTimeFieldVariation =
   | 'combined'
   | 'localization';
 
+export type CategoriesGetListQueryVariables = Exact<{
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+}>;
+
+
+export type CategoriesGetListQuery = { categories: Array<{ id: string, name: string }> };
+
 export type ProductGetByIdQueryVariables = Exact<{
   id: Scalars['ID']['input'];
 }>;
@@ -10758,6 +10766,14 @@ export class TypedDocumentString<TResult, TVariables>
   }
 }
 
+export const CategoriesGetListDocument = new TypedDocumentString(`
+    query CategoriesGetList($skip: Int, $first: Int) {
+  categories(skip: $skip, first: $first) {
+    id
+    name
+  }
+}
+    `) as unknown as TypedDocumentString<CategoriesGetListQuery, CategoriesGetListQueryVariables>;
 export const ProductGetByIdDocument = new TypedDocumentString(`
     query ProductGetById($id: ID!) {
   product(where: {id: $id}) {

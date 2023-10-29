@@ -4,10 +4,12 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ActiveLink } from "@/components/ActiveLink";
 import { SearchInput } from "@/components/SearchInput";
+import { getCategoriesList } from "@/api/categories";
 
 const numOfItemsInBag = 0;
 
-export const Navbar = () => {
+export const Navbar = async () => {
+	const categories = await getCategoriesList();
 	return (
 		<nav className="mx-auto flex max-w-7xl items-center justify-between gap-4 p-6 py-10">
 			<Link href={"/"}>
@@ -32,6 +34,17 @@ export const Navbar = () => {
 				>
 					Wszystko
 				</ActiveLink>
+				{categories.map((category) => (
+					<ActiveLink
+						key={category.id}
+						href={`/products/${category.name}`}
+						className="border-b-2 border-b-transparent text-lg"
+						activeClassName="border-b-2 border-zinc-900 text-lg font-semibold"
+						exact={false}
+					>
+						{category.name}
+					</ActiveLink>
+				))}
 				<ActiveLink
 					href={"/studio"}
 					className="border-b-2 border-b-transparent text-lg"
