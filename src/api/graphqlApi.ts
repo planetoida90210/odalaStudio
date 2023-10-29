@@ -1,3 +1,5 @@
+import { type TypedDocumentString } from "@/gql/graphql";
+
 export const executeGraphql = async <TResult, TVariables>(
 	query: TypedDocumentString<TResult, TVariables>,
 	...[variables]: TVariables extends Record<string, never> ? [] : [TVariables]

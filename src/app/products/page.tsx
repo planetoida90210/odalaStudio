@@ -1,7 +1,8 @@
-export default function ProductsPage() {
-	return (
-		<section>
-			<h1>Products</h1>
-		</section>
-	);
+import { getProductsList } from "@/api/products";
+import { ProductList } from "@/components/ProductList";
+
+export default async function ProductsPage() {
+	const products = await getProductsList();
+
+	return <ProductList products={products} />;
 }
