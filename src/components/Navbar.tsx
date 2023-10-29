@@ -1,3 +1,4 @@
+import { type UrlObject } from "url";
 import { LucideShoppingBag } from "lucide-react";
 import Link from "next/link";
 
@@ -37,7 +38,7 @@ export const Navbar = async () => {
 				{categories.map((category) => (
 					<ActiveLink
 						key={category.id}
-						href={`/products/${category.name}`}
+						href={`/categories/${category.name}` as unknown as UrlObject}
 						className="border-b-2 border-b-transparent text-lg"
 						activeClassName="border-b-2 border-zinc-900 text-lg font-semibold"
 						exact={false}
