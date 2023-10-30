@@ -10736,6 +10736,13 @@ export type CategoriesGetListQueryVariables = Exact<{
 
 export type CategoriesGetListQuery = { categories: Array<{ id: string, name: string }> };
 
+export type ProductGetByCategoryIdQueryVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+
+export type ProductGetByCategoryIdQuery = { category?: { id: string, name: string, products: Array<{ id: string, name: string, price: number, description: string, images: Array<{ id: string, url: string }> }> } | null };
+
 export type ProductGetByIdQueryVariables = Exact<{
   id: Scalars['ID']['input'];
 }>;
@@ -10774,6 +10781,24 @@ export const CategoriesGetListDocument = new TypedDocumentString(`
   }
 }
     `) as unknown as TypedDocumentString<CategoriesGetListQuery, CategoriesGetListQueryVariables>;
+export const ProductGetByCategoryIdDocument = new TypedDocumentString(`
+    query ProductGetByCategoryId($id: ID!) {
+  category(where: {id: $id}) {
+    id
+    name
+    products {
+      id
+      name
+      price
+      description
+      images(first: 1) {
+        id
+        url
+      }
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<ProductGetByCategoryIdQuery, ProductGetByCategoryIdQueryVariables>;
 export const ProductGetByIdDocument = new TypedDocumentString(`
     query ProductGetById($id: ID!) {
   product(where: {id: $id}) {
