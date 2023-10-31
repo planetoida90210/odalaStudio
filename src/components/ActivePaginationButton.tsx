@@ -6,12 +6,11 @@ import { cn } from "@/lib/utils";
 
 export const ActivePaginationButton = ({ page }: { page: number }) => {
 	const pathname = usePathname();
-	const currentPageFromPathname = pathname.split("/")[2];
+	const pageNumberSegment = pathname.split("/").pop();
+	const currentPageFromPathname = pageNumberSegment ? parseInt(pageNumberSegment, 10) : 1;
+
 	return (
-		<Button
-			variant="link"
-			className={cn(page.toString() === currentPageFromPathname && "underline")}
-		>
+		<Button variant="link" className={cn(page === currentPageFromPathname && "underline")}>
 			{page}
 		</Button>
 	);

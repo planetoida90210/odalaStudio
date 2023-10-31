@@ -25,10 +25,11 @@ export default async function CategoryLayout({
 	params,
 }: {
 	children: React.ReactNode;
-	params: { category: string };
+	params: { category: string; page: string };
 }) {
-	const products = await getProductsByCategoryId(params.category);
-	const numOfPages = Math.ceil((products?.length || 0) / 20);
+	const totalProducts = await getProductsByCategoryId(params.category);
+	const numOfPages = Math.ceil((totalProducts?.length || 0) / 5);
+
 	return (
 		<>
 			<h1 className="mx-auto max-w-7xl pb-8 text-4xl font-extrabold first-letter:uppercase">
