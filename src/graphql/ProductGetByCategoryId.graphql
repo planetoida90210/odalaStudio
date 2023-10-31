@@ -1,13 +1,13 @@
-query ProductGetByCategoryId($id: ID!) {
+query ProductsByCategoryId($id: ID!) {
 	category(where: { id: $id }) {
 		id
 		name
 		products {
 			id
 			name
-			price
 			description
-			images(first: 1) {
+			price
+			images {
 				id
 				url
 			}
