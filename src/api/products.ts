@@ -1,5 +1,10 @@
 import { executeGraphql } from "@/api/graphqlApi";
-import { ProductGetByIdDocument, ProductsGetListDocument } from "@/gql/graphql";
+import {
+	ProductGetByIdDocument,
+	ProductsByCategoryIdDocument,
+	ProductsGetListDocument,
+} from "@/gql/graphql";
+import { getIdByName } from "@/lib/utils";
 import { type ProductItemType } from "@/types/productItemType";
 
 export const getProductsList = async (
@@ -41,4 +46,34 @@ export const getProductById = async (id: string): Promise<ProductItemType | null
 		},
 		category: product.categories[0]?.name || "",
 	};
+};
+
+export const getProductsByCategoryId = async (
+	categoryName: string,
+): Promise<ProductItemType[] | null> => {
+	const categoryId = getIdByName(categoryName);
+
+	if (!categoryId) {
+		return null;
+	}
+
+	const graphqlResponse = await executeGraphql(ProductsByCategoryIdDocument, { id: categoryId });
+
+	if (!graphqlResponse.category || !graphqlResponse.category.products) {
+		return null;
+	}
+
+	return graphqlResponse.category.products.map((product) => {
+		return {
+			id: product.id,
+			name: product.name,
+			description: product.description,
+			price: product.price,
+			coverImage: product.images[0] && {
+				src: product.images[0].url,
+				alt: product.name,
+			},
+			category: graphqlResponse.category?.name || "",
+		};
+	});
 };
