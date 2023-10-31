@@ -12,7 +12,7 @@ export default async function CategoryPage({ params }: { params: { category: str
 		);
 	}
 	return (
-		<main className="mx-auto min-h-screen max-w-7xl">
+		<main className="mx-auto min-h-screen max-w-5xl">
 			<ProductList products={productsInThisCategory} />
 		</main>
 	);
