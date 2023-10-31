@@ -10738,6 +10738,8 @@ export type CategoriesGetListQuery = { categories: Array<{ id: string, name: str
 
 export type ProductsByCategoryIdQueryVariables = Exact<{
   id: Scalars['ID']['input'];
+  first?: InputMaybe<Scalars['Int']['input']>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
 }>;
 
 
@@ -10782,11 +10784,11 @@ export const CategoriesGetListDocument = new TypedDocumentString(`
 }
     `) as unknown as TypedDocumentString<CategoriesGetListQuery, CategoriesGetListQueryVariables>;
 export const ProductsByCategoryIdDocument = new TypedDocumentString(`
-    query ProductsByCategoryId($id: ID!) {
+    query ProductsByCategoryId($id: ID!, $first: Int, $skip: Int) {
   category(where: {id: $id}) {
     id
     name
-    products {
+    products(first: $first, skip: $skip) {
       id
       name
       description

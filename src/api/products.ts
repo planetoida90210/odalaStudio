@@ -50,14 +50,19 @@ export const getProductById = async (id: string): Promise<ProductItemType | null
 
 export const getProductsByCategoryId = async (
 	categoryName: string,
+	first?: number,
+	skip?: number,
 ): Promise<ProductItemType[] | null> => {
-	const categoryId = getIdByName(categoryName);
-
+	const categoryId = await getIdByName(categoryName);
 	if (!categoryId) {
 		return null;
 	}
 
-	const graphqlResponse = await executeGraphql(ProductsByCategoryIdDocument, { id: categoryId });
+	const graphqlResponse = await executeGraphql(ProductsByCategoryIdDocument, {
+		id: categoryId,
+		first,
+		skip,
+	});
 
 	if (!graphqlResponse.category || !graphqlResponse.category.products) {
 		return null;

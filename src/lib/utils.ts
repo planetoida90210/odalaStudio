@@ -16,22 +16,15 @@ export function formatMoney(amount: number, currency = "PLN") {
 
 //mapping category id to name
 
-let categoryMapping: Record<string, string> = {};
-
-async function fetchCategories(): Promise<void> {
+async function getIdByName(categoryName: string): Promise<string | undefined> {
 	try {
 		const categories: Category[] = await getCategoriesList();
-		categoryMapping = categories.reduce((map: Record<string, string>, category: Category) => {
-			map[category.name] = category.id;
-			return map;
-		}, {});
+		const foundCategory = categories.find((category) => category.name === categoryName);
+		return foundCategory ? foundCategory.id : undefined;
 	} catch (error) {
-		console.error("Error fetching categories:", error);
+		console.error("Błąd podczas pobierania kategorii:", error);
+		return undefined;
 	}
 }
 
-function getIdByName(categoryName: string): string | undefined {
-	return categoryMapping[categoryName];
-}
-
-export { fetchCategories, getIdByName };
+export { getIdByName };

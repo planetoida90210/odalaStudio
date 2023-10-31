@@ -1,8 +1,8 @@
-query ProductsByCategoryId($id: ID!) {
+query ProductsByCategoryId($id: ID!, $first: Int, $skip: Int) {
 	category(where: { id: $id }) {
 		id
 		name
-		products {
+		products(first: $first, skip: $skip) {
 			id
 			name
 			description

@@ -28,10 +28,10 @@ export default async function CategoryLayout({
 	params: { category: string };
 }) {
 	const products = await getProductsByCategoryId(params.category);
-	const numOfPages = Math.ceil((products?.length || 0) / 5);
+	const numOfPages = Math.ceil((products?.length || 0) / 20);
 	return (
 		<>
-			<h1 className="mx-auto max-w-7xl pb-20 text-4xl font-extrabold first-letter:uppercase">
+			<h1 className="mx-auto max-w-7xl pb-8 text-4xl font-extrabold first-letter:uppercase">
 				{params.category}
 			</h1>
 			<main className="mx-auto max-w-7xl">{children}</main>
