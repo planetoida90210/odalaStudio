@@ -3,6 +3,7 @@ import Image from "next/image";
 import { type Metadata } from "next";
 import { getSingleProductById } from "@/api/products";
 import { formatMoney } from "@/lib/utils";
+import { type VariantType } from "@/types/variantType";
 
 export async function generateMetadata({
 	params,
@@ -26,6 +27,34 @@ export async function generateMetadata({
 		},
 	};
 }
+
+const ColorPicker = ({ variants }: { variants: VariantType[] }) => (
+	<div className="flex space-x-4">
+		{variants.map(
+			(variant, index) =>
+				variant.color && (
+					<button
+						key={index}
+						className="h-8 w-8 rounded-full border border-gray-300"
+						style={{ backgroundColor: variant.color }}
+					/>
+				),
+		)}
+	</div>
+);
+
+const SizePicker = ({ variants }: { variants: VariantType[] }) => (
+	<div className="flex space-x-4">
+		{variants.map(
+			(variant, index) =>
+				variant.size && (
+					<button key={index} className="rounded-md border border-gray-300 px-4 py-2">
+						{variant.size}
+					</button>
+				),
+		)}
+	</div>
+);
 
 export default async function SingleProductPage({ params }: { params: { productId: string } }) {
 	const product = await getSingleProductById(params.productId);
@@ -56,6 +85,21 @@ export default async function SingleProductPage({ params }: { params: { productI
 					<div className="flex justify-between">
 						<h1 className="text-xl font-medium text-zinc-900">{product.name}</h1>
 						<p className="text-xl font-medium text-zinc-900">{formatMoney(product.price / 100)}</p>
+					</div>
+					{/* Variants Selector */}
+					<div className="mt-4">
+						{product.variants?.some((variant) => variant.color) && (
+							<div className="mb-4">
+								<h3 className="text-sm font-medium text-gray-700">Color</h3>
+								<ColorPicker variants={product.variants} />
+							</div>
+						)}
+						{product.variants?.some((variant) => variant.size) && (
+							<div className="mb-4">
+								<h3 className="text-sm font-medium text-gray-700">Size</h3>
+								<SizePicker variants={product.variants} />
+							</div>
+						)}
 					</div>
 					{/* Product details */}
 					<div className="mt-10">

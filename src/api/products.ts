@@ -5,7 +5,7 @@ import {
 	ProductsByCategoryIdDocument,
 	ProductsGetListDocument,
 } from "@/gql/graphql";
-import { getIdByName } from "@/lib/utils";
+import { getIdByName, mapVariant } from "@/lib/utils";
 import { type ProductItemType } from "@/types/productItemType";
 import { type SingleProductType } from "@/types/singleProductTypes";
 
@@ -113,5 +113,6 @@ export const getSingleProductById = async (id: string): Promise<SingleProductTyp
 			name: category.name,
 			slug: category.slug,
 		})),
+		variants: product.variants?.map(mapVariant),
 	};
 };

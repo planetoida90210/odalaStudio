@@ -1,5 +1,6 @@
 import { type Category } from "@/types/categoriesType";
 import { type ReviewType } from "@/types/reviewType";
+import { type VariantType } from "@/types/variantType";
 
 export type ImageType = {
 	id: string;
@@ -16,4 +17,5 @@ export type SingleProductType = {
 	slug: string;
 	reviews: ReviewType[];
 	categories: Category[];
+	variants?: VariantType[];
 };
