@@ -12,13 +12,13 @@ export default async function CategoryPage({
 	const productsInThisCategory = await getProductsByCategoryId(params.category, 5, skip);
 	if (!productsInThisCategory || productsInThisCategory.length === 0) {
 		return (
-			<main className="mx-auto min-h-screen max-w-7xl">
+			<main className="mx-auto h-fit max-w-7xl">
 				<p>Nie znaleziono produktów w tej kategorii.</p>
 			</main>
 		);
 	}
 	return (
-		<main className="mx-auto min-h-screen max-w-5xl">
+		<main className="mx-auto h-fit max-w-5xl">
 			<ProductList products={productsInThisCategory} />
 		</main>
 	);

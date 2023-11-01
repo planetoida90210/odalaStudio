@@ -4,7 +4,7 @@ import { Button } from "./ui/button";
 
 export const MainBanner = () => {
 	return (
-		<div className="relative">
+		<div className="relative h-full">
 			<div aria-hidden="true" className="absolute hidden h-full w-1/2 bg-zinc-200 lg:block" />
 			<div className="relative bg-zinc-100 lg:bg-transparent">
 				<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:grid lg:grid-cols-2 lg:px-8">

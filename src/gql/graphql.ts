@@ -10752,6 +10752,13 @@ export type ProductGetByIdQueryVariables = Exact<{
 
 export type ProductGetByIdQuery = { product?: { id: string, name: string, description: string, price: number, categories: Array<{ name: string }>, images: Array<{ url: string }> } | null };
 
+export type ProductGetSingleByIdQueryVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+
+export type ProductGetSingleByIdQuery = { product?: { id: string, name: string, description: string, createdAt: unknown, price: number, slug: string, images: Array<{ id: string, url: string }>, reviews: Array<{ content: string, createdAt: unknown, email: string, headline: string, name: string, id: string, rating?: number | null }>, categories: Array<{ id: string, name: string, slug: string }> } | null };
+
 export type ProductsGetListQueryVariables = Exact<{
   first?: InputMaybe<Scalars['Int']['input']>;
   skip?: InputMaybe<Scalars['Int']['input']>;
@@ -10817,6 +10824,36 @@ export const ProductGetByIdDocument = new TypedDocumentString(`
   }
 }
     `) as unknown as TypedDocumentString<ProductGetByIdQuery, ProductGetByIdQueryVariables>;
+export const ProductGetSingleByIdDocument = new TypedDocumentString(`
+    query ProductGetSingleById($id: ID!) {
+  product(where: {id: $id}) {
+    id
+    name
+    description
+    createdAt
+    images {
+      id
+      url
+    }
+    price
+    slug
+    reviews {
+      content
+      createdAt
+      email
+      headline
+      name
+      id
+      rating
+    }
+    categories {
+      id
+      name
+      slug
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<ProductGetSingleByIdQuery, ProductGetSingleByIdQueryVariables>;
 export const ProductsGetListDocument = new TypedDocumentString(`
     query ProductsGetList($first: Int, $skip: Int) {
   products(first: $first, skip: $skip) {

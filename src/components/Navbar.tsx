@@ -12,7 +12,10 @@ const numOfItemsInBag = 0;
 export const Navbar = async () => {
 	const categories = await getCategoriesList();
 	return (
-		<nav className="mx-auto flex max-w-7xl items-center justify-between gap-4 p-6 py-10">
+		<nav
+			id="navbar"
+			className="mx-auto flex max-w-7xl items-center justify-between gap-4 p-6 py-10"
+		>
 			<Link href={"/"}>
 				<span className="block -rotate-6 bg-zinc-950 p-2 text-3xl font-semibold text-zinc-50">
 					Odala Studio
