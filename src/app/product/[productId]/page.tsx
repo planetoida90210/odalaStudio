@@ -64,13 +64,14 @@ export default async function SingleProductPage({ params }: { params: { productI
 					<div className="mt-4">
 						{product.productColorVariant && (
 							<div className="mb-4">
-								<h3 className="text-sm font-medium text-gray-700">Color</h3>
-								<ColorPicker variants={[product.productColorVariant]} />
+								<ColorPicker
+									variants={[product.productColorVariant]}
+									currentColor={product.productColorVariant.name}
+								/>
 							</div>
 						)}
 						{product.productSizeVariants.length > 0 && (
 							<div className="mb-4">
-								<h3 className="text-sm font-medium text-gray-700">Size</h3>
 								<SizePicker variants={product.productSizeVariants} />
 							</div>
 						)}
