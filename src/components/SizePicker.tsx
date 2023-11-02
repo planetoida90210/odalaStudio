@@ -34,7 +34,7 @@ export const SizePicker = ({
 								}`}
 							>
 								<Link href={`?size=${variant.name}`} className="w-full p-4 text-center">
-									{variant.name}
+									{variant.size}
 								</Link>
 							</Label>
 						</div>

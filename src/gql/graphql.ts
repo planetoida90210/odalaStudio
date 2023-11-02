@@ -9939,7 +9939,7 @@ export type ProductGetSingleByIdQueryVariables = Exact<{
 }>;
 
 
-export type ProductGetSingleByIdQuery = { product?: { id: string, name: string, description: string, createdAt: unknown, price: number, slug: string, images: Array<{ id: string, url: string, size?: number | null }>, reviews: Array<{ content: string, createdAt: unknown, email: string, headline: string, name: string, id: string, rating?: number | null }>, categories: Array<{ id: string, name: string, slug: string }>, productSizeVariants: Array<{ id: string, name: string, stock?: number | null }>, productColorVariant?: { color: ProductColor, id: string, name: string } | null } | null };
+export type ProductGetSingleByIdQuery = { product?: { id: string, name: string, description: string, createdAt: unknown, price: number, slug: string, images: Array<{ id: string, url: string, size?: number | null }>, reviews: Array<{ content: string, createdAt: unknown, email: string, headline: string, name: string, id: string, rating?: number | null }>, categories: Array<{ id: string, name: string, slug: string }>, productSizeVariants: Array<{ id: string, name: string, stock?: number | null, size: ProductSize }>, productColorVariant?: { color: ProductColor, id: string, name: string } | null } | null };
 
 export type ProductsGetListQueryVariables = Exact<{
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -10039,6 +10039,7 @@ export const ProductGetSingleByIdDocument = new TypedDocumentString(`
       id
       name
       stock
+      size
     }
     productColorVariant {
       color

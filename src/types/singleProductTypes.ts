@@ -9,6 +9,7 @@ export type ImageType = {
 export type SizeVariantType = {
 	id: string;
 	name: string;
+	size: string;
 	stock?: number | null;
 };
 

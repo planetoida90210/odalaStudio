@@ -117,6 +117,7 @@ export const getSingleProductById = async (id: string): Promise<SingleProductTyp
 		productSizeVariants: product.productSizeVariants.map((variant) => ({
 			id: variant.id,
 			name: variant.name,
+			size: variant.size,
 			stock: variant.stock || 0,
 		})),
 		productColorVariant: product.productColorVariant

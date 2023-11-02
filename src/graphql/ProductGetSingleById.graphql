@@ -29,6 +29,7 @@ query ProductGetSingleById($id: ID!) {
 			id
 			name
 			stock
+			size
 		}
 		productColorVariant {
 			color
