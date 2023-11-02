@@ -5,7 +5,7 @@ import {
 	ProductsByCategoryIdDocument,
 	ProductsGetListDocument,
 } from "@/gql/graphql";
-import { getIdByName, mapVariant } from "@/lib/utils";
+import { getIdByName } from "@/lib/utils";
 import { type ProductItemType } from "@/types/productItemType";
 import { type SingleProductType } from "@/types/singleProductTypes";
 
@@ -91,7 +91,8 @@ export const getSingleProductById = async (id: string): Promise<SingleProductTyp
 		return null;
 	}
 
-	const product = graphqlResponse.product;
+	const product = graphqlResponse.product as SingleProductType;
+
 	return {
 		id: product.id,
 		name: product.name,
@@ -113,6 +114,17 @@ export const getSingleProductById = async (id: string): Promise<SingleProductTyp
 			name: category.name,
 			slug: category.slug,
 		})),
-		variants: product.variants?.map(mapVariant),
+		productSizeVariants: product.productSizeVariants.map((variant) => ({
+			id: variant.id,
+			name: variant.name,
+			stock: variant.stock || 0,
+		})),
+		productColorVariant: product.productColorVariant
+			? {
+					id: product.productColorVariant.id,
+					name: product.productColorVariant.name,
+					color: product.productColorVariant.color,
+			  }
+			: null,
 	};
 };

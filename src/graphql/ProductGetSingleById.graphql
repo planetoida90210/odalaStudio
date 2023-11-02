@@ -25,22 +25,15 @@ query ProductGetSingleById($id: ID!) {
 			name
 			slug
 		}
-		variants {
-			... on ProductColorVariant {
-				id
-				name
-				color
-			}
-			... on ProductSizeColorVariant {
-				id
-				name
-				size
-			}
-			... on ProductSizeVariant {
-				id
-				name
-				size
-			}
+		productSizeVariants {
+			id
+			name
+			stock
+		}
+		productColorVariant {
+			color
+			id
+			name
 		}
 	}
 }
