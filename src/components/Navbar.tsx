@@ -11,29 +11,30 @@ const numOfItemsInBag = 0;
 
 export const Navbar = async () => {
 	const categories = await getCategoriesList();
+
 	return (
 		<nav
 			id="navbar"
-			className="mx-auto flex max-w-7xl items-center justify-between gap-4 p-6 py-10"
+			className="mx-auto flex h-[120px] max-w-7xl items-center justify-between gap-4 p-6 py-10 md:h-[180px]"
 		>
 			<Link href={"/"}>
-				<span className="block -rotate-6 bg-zinc-950 p-2 text-3xl font-semibold text-zinc-50">
+				<span className="mt-2 block -rotate-6 bg-zinc-950 p-2 font-semibold text-zinc-50 md:text-3xl">
 					Odala Studio
 				</span>
 			</Link>
 			<SearchInput />
-			<ul className="flex items-center gap-4" role="navigation">
+			<ul className="items-center gap-4 space-x-2 md:flex" role="navigation">
 				<ActiveLink
 					href={"/"}
-					className="border-b-2 border-b-transparent text-lg"
-					activeClassName="border-b-2 border-zinc-900 text-lg font-semibold"
+					className="text-md border-b-2 border-b-transparent md:text-lg"
+					activeClassName="border-b-2 border-zinc-900 text-md md:text-lg font-semibold"
 				>
 					Nowości
 				</ActiveLink>
 				<ActiveLink
 					href={"/products"}
-					className="border-b-2 border-b-transparent text-lg"
-					activeClassName="border-b-2 border-zinc-900 text-lg font-semibold"
+					className="text-md border-b-2 border-b-transparent md:text-lg"
+					activeClassName="border-b-2 border-zinc-900 text-md md:text-lg font-semibold"
 					exact={false}
 				>
 					Wszystko
@@ -42,8 +43,8 @@ export const Navbar = async () => {
 					<ActiveLink
 						key={category.id}
 						href={`/categories/${category.name}` as unknown as UrlObject}
-						className="border-b-2 border-b-transparent text-lg"
-						activeClassName="border-b-2 border-zinc-900 text-lg font-semibold"
+						className="text-md border-b-2 border-b-transparent md:text-lg"
+						activeClassName="border-b-2 border-zinc-900 text-md md:text-lg font-semibold"
 						exact={false}
 					>
 						{category.name}
@@ -51,15 +52,15 @@ export const Navbar = async () => {
 				))}
 				<ActiveLink
 					href={"/studio"}
-					className="border-b-2 border-b-transparent text-lg"
-					activeClassName="border-b-2 border-zinc-900 text-lg font-semibold"
+					className="text-md border-b-2 border-b-transparent md:text-lg"
+					activeClassName="border-b-2 border-zinc-900 text-md md:text-lg font-semibold"
 				>
 					Studio
 				</ActiveLink>
 			</ul>
 			<Link href={"/cart"} role="button">
 				<Button variant={"ghost"} className="flex gap-1 px-2">
-					<LucideShoppingBag className={"h-6 w-6 "} />
+					<LucideShoppingBag className={"h-4 w-4 md:h-6 md:w-6 "} />
 					<span>{numOfItemsInBag}</span>
 				</Button>
 			</Link>

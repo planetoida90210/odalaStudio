@@ -13,10 +13,12 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
 	return (
-		<html lang="pl">
-			<body className={inter.className}>
+		<html lang="pl" className="h-full">
+			<body className={`${inter.className} flex min-h-screen flex-col`}>
 				<Navbar />
-				{children}
+				<div className="flex-1" style={{ minHeight: "calc(100vh - var(--navbar-height))" }}>
+					{children}
+				</div>
 				<Footer />
 			</body>
 		</html>
