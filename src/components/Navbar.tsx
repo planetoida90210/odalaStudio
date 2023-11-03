@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ActiveLink } from "@/components/ActiveLink";
 import { SearchInput } from "@/components/SearchInput";
+import { SidebarToggle } from "@/components/SidebarToggle";
 import { getCategoriesList } from "@/api/categories";
 
 const numOfItemsInBag = 0;
@@ -15,7 +16,7 @@ export const Navbar = async () => {
 	return (
 		<nav
 			id="navbar"
-			className="mx-auto flex h-[120px] max-w-7xl items-center justify-between gap-4 p-6 py-10 md:h-[180px]"
+			className="navbar mx-auto flex h-[120px] max-w-7xl items-baseline justify-between gap-4 p-6 py-10 md:h-[180px] md:items-center"
 		>
 			<Link href={"/"}>
 				<span className="mt-2 block -rotate-6 bg-zinc-950 p-2 font-semibold text-zinc-50 md:text-3xl">
@@ -23,7 +24,7 @@ export const Navbar = async () => {
 				</span>
 			</Link>
 			<SearchInput />
-			<ul className="items-center gap-4 space-x-2 md:flex" role="navigation">
+			<ul className="hidden items-center gap-4 space-x-2 md:flex" role="navigation">
 				<ActiveLink
 					href={"/"}
 					className="text-md border-b-2 border-b-transparent md:text-lg"
@@ -58,9 +59,12 @@ export const Navbar = async () => {
 					Studio
 				</ActiveLink>
 			</ul>
+			<div className="md:hidden">
+				<SidebarToggle />
+			</div>
 			<Link href={"/cart"} role="button">
 				<Button variant={"ghost"} className="flex gap-1 px-2">
-					<LucideShoppingBag className={"h-4 w-4 md:h-6 md:w-6 "} />
+					<LucideShoppingBag className={"h-6 w-6 "} />
 					<span>{numOfItemsInBag}</span>
 				</Button>
 			</Link>

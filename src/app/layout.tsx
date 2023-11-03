@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Footer } from "@/components/Footer";
 import { Navbar } from "@/components/Navbar";
+import { Sidebar } from "@/components/Sidebar";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -16,10 +17,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 		<html lang="pl" className="h-full">
 			<body className={`${inter.className} flex min-h-screen flex-col`}>
 				<Navbar />
-				<div className="flex-1" style={{ minHeight: "calc(100vh - var(--navbar-height))" }}>
+				<Sidebar />
+				<div
+					className="content-hide flex-1"
+					style={{ minHeight: "calc(100vh - var(--navbar-height))" }}
+				>
 					{children}
 				</div>
-				<Footer />
+				<Footer className="content-hide" />
 			</body>
 		</html>
 	);
