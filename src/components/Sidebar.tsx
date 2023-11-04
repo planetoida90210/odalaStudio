@@ -6,9 +6,9 @@ import { ActiveLink } from "@/components/ActiveLink";
 export const Sidebar = async () => {
 	const categories = await getCategoriesList();
 	return (
-		<div className="sidebar-container inset-y-0 left-0 top-[120px] flex w-full  transform items-start justify-center bg-white pt-20 transition-transform md:hidden">
+		<div className="sidebar-container inset-y-0 left-0 top-[120px] flex w-full  transform items-start justify-center bg-white pt-8 transition-transform md:hidden">
 			<nav className="sidebar-nav text-center text-xl leading-relaxed">
-				<ul className="flex h-full w-full flex-col items-center justify-center gap-16">
+				<ul className="flex h-full w-full flex-col items-center justify-center gap-12">
 					<ActiveLink
 						href={"/"}
 						className="text-md border-b-2 border-b-transparent md:text-lg"
