@@ -18,13 +18,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 			<body className={`${inter.className} flex min-h-screen flex-col`}>
 				<Navbar />
 				<Sidebar />
-				<div
-					className="content-hide flex-1"
-					style={{ minHeight: "calc(100vh - var(--navbar-height))" }}
-				>
+				<div className="flex-1" style={{ minHeight: "calc(100vh - var(--navbar-height))" }}>
 					{children}
 				</div>
-				<Footer className="content-hide" />
+				<Footer />
 			</body>
 		</html>
 	);

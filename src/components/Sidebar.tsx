@@ -8,7 +8,7 @@ export const Sidebar = async () => {
 	return (
 		<div className="sidebar-container inset-y-0 left-0 top-[120px] w-full transform bg-white transition-transform md:hidden">
 			<nav className="sidebar-nav text-center text-xl leading-relaxed">
-				<ul className="">
+				<ul className="flex h-full flex-col gap-8">
 					<ActiveLink
 						href={"/"}
 						className="text-md border-b-2 border-b-transparent md:text-lg"
