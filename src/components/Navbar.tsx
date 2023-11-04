@@ -16,7 +16,7 @@ export const Navbar = async () => {
 	return (
 		<nav
 			id="navbar"
-			className="navbar mx-auto flex h-[120px] max-w-7xl items-baseline justify-between gap-4 p-6 py-10 md:h-[180px] md:items-center"
+			className="navbar mx-auto flex h-[120px] max-w-7xl items-center justify-center gap-4 p-6 py-10 md:h-[180px] md:items-center"
 		>
 			<Link href={"/"}>
 				<span className="mt-2 block -rotate-6 bg-zinc-950 p-2 font-semibold text-zinc-50 md:text-3xl">
