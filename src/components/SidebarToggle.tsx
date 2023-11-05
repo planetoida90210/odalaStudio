@@ -12,7 +12,7 @@ export const SidebarToggle = () => {
 	useEffect(() => {
 		const closeSidebar = () => {
 			setSidebarOpen(false);
-			document.body.classList.remove("sidebar-open");
+			document.body.classList.remove("sidebar-open", "no-scroll");
 		};
 
 		if (isSidebarOpen) {
@@ -25,9 +25,9 @@ export const SidebarToggle = () => {
 		setSidebarOpen((prevState) => {
 			const newState = !prevState;
 			if (newState) {
-				document.body.classList.add("sidebar-open");
+				document.body.classList.add("sidebar-open", "no-scroll");
 			} else {
-				document.body.classList.remove("sidebar-open");
+				document.body.classList.remove("sidebar-open", "no-scroll");
 			}
 			return newState;
 		});
