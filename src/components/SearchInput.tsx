@@ -31,6 +31,7 @@ export const SearchInput = () => {
 			type="search"
 			onChange={handleChange}
 			className="w-1/2 md:w-full"
+			autoFocus={false}
 		/>
 	);
 };
