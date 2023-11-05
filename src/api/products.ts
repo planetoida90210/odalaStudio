@@ -133,7 +133,6 @@ export const getSingleProductById = async (id: string): Promise<SingleProductTyp
 
 export const getProductsByName = async (name: string): Promise<ProductItemType[]> => {
 	const graphqlResponse = await executeGraphql(ProductsByNameDocument, { name });
-	console.log(graphqlResponse.products);
 
 	if (!graphqlResponse.products) {
 		redirect("/");

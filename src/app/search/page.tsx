@@ -12,7 +12,10 @@ export default async function SearchResultPage({
 	const products = await getProductsByName(query);
 	return (
 		<main className="mx-auto min-h-screen max-w-7xl">
-			<h1 className="pb-20 text-4xl font-extrabold first-letter:uppercase" role="heading">
+			<h1
+				className="pb-20 pt-8 text-2xl font-extrabold first-letter:uppercase md:pt-0"
+				role="heading"
+			>
 				Wyniki wyszukiwania
 			</h1>
 			{products.length === 0 ? (

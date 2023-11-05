@@ -20,6 +20,7 @@ export const SearchInput = () => {
 	useEffect(() => {
 		if (debouncedSearchTerm) {
 			router.push(`/search?query=${debouncedSearchTerm}` as Route);
+			setSearchTerm("");
 		}
 	}, [debouncedSearchTerm, router]);
 
