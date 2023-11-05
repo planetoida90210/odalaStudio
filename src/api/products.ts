@@ -1,8 +1,10 @@
+import { redirect } from "next/navigation";
 import { executeGraphql } from "@/api/graphqlApi";
 import {
 	ProductGetByIdDocument,
 	ProductGetSingleByIdDocument,
 	ProductsByCategoryIdDocument,
+	ProductsByNameDocument,
 	ProductsGetListDocument,
 } from "@/gql/graphql";
 import { getIdByName } from "@/lib/utils";
@@ -30,7 +32,6 @@ export const getProductsList = async (
 
 export const getProductById = async (id: string): Promise<ProductItemType | null> => {
 	const graphqlResponse = await executeGraphql(ProductGetByIdDocument, { id });
-	console.log(graphqlResponse);
 
 	if (!graphqlResponse.product) {
 		return null;
@@ -128,4 +129,27 @@ export const getSingleProductById = async (id: string): Promise<SingleProductTyp
 			  }
 			: null,
 	};
+};
+
+export const getProductsByName = async (name: string): Promise<ProductItemType[]> => {
+	const graphqlResponse = await executeGraphql(ProductsByNameDocument, { name });
+	console.log(graphqlResponse.products);
+
+	if (!graphqlResponse.products) {
+		redirect("/");
+	}
+
+	return graphqlResponse.products.map((product) => ({
+		id: product.id,
+		name: product.name,
+		description: product.description,
+		price: product.price,
+		coverImage: product.images[0]
+			? {
+					src: product.images[0].url,
+					alt: product.name,
+			  }
+			: undefined,
+		category: product.categories?.[0]?.name || "",
+	}));
 };

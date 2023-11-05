@@ -1,0 +1,15 @@
+query ProductsByName($name: String!) {
+	products(where: { name_contains: $name }) {
+		id
+		name
+		description
+		price
+		images {
+			url
+		}
+		categories {
+			id
+			name
+		}
+	}
+}
