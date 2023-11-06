@@ -26,91 +26,101 @@ export const ImageCarousel = ({ images }) => {
 	};
 
 	return (
-		<div className="relative flex items-center lg:items-start">
-			<div className="hidden lg:mr-4 lg:flex lg:flex-col lg:space-y-2">
-				{images.map((image, index) => (
-					<button
-						key={index}
-						onClick={() => goToSlide(index)}
-						aria-label={`Go to image ${index + 1}`}
-						className={`h-12 w-12 ${
-							index === activeIndex ? "ring-2 ring-indigo-500 ring-offset-2" : ""
-						}`}
-					>
+		<div className="relative">
+			<div className="flex items-center lg:items-start">
+				{/* Thumbnails for lg screens */}
+				<div className="hidden lg:mr-4 lg:flex lg:flex-col lg:space-y-2">
+					{images.map((image, index) => (
+						<button
+							key={index}
+							onClick={() => goToSlide(index)}
+							aria-label={`Go to image ${index + 1}`}
+							className={`h-12 w-12 ${
+								index === activeIndex ? "ring-2 ring-indigo-500 ring-offset-2" : ""
+							}`}
+						>
+							<Image
+								width={48}
+								height={48}
+								src={image.url}
+								alt={`Thumbnail ${index}`}
+								className="rounded-lg"
+							/>
+						</button>
+					))}
+				</div>
+
+				{/* Main image container */}
+				<div className="relative flex-grow">
+					{/* Main image for lg screens */}
+					{images.length > 0 && (
+						<div className="hidden lg:block">
+							<Image
+								width={696}
+								height={696}
+								src={images[activeIndex].url}
+								alt={`Image ${activeIndex}`}
+								className="rounded-lg"
+							/>
+						</div>
+					)}
+					{/* Side-by-side images for md screens */}
+					<div className="hidden md:flex lg:hidden">
+						<div className="w-1/2">
+							<Image
+								width={348}
+								height={348}
+								src={images[activeIndex].url}
+								alt={`Image ${activeIndex}`}
+								className="rounded-lg"
+							/>
+						</div>
+						<div className="w-1/2">
+							<Image
+								width={348}
+								height={348}
+								src={getNextIndexForMd(activeIndex, images).url}
+								alt={`Image ${getNextIndexForMd(activeIndex, images).alt}`}
+								className="rounded-lg"
+							/>
+						</div>
+					</div>
+					{/* Single image for sm screens */}
+					<div className="block md:hidden">
 						<Image
-							width={48}
-							height={48}
-							src={image.url}
-							alt={`Thumbnail ${index}`}
-							className="rounded-lg"
+							width={348}
+							height={348}
+							src={images[activeIndex].url}
+							alt={`Image ${activeIndex}`}
+							className="mx-auto rounded-lg"
 						/>
-					</button>
-				))}
+					</div>
+					{/* Arrows for navigation */}
+					{images.length > 1 && (
+						<>
+							<Button
+								variant={"outline"}
+								onClick={goToPrevious}
+								aria-label="Previous image"
+								className="absolute left-0 top-1/2 z-10 -translate-y-1/2 transform rounded-full"
+							>
+								<ChevronLeft className="h-6 w-6" />
+							</Button>
+							<Button
+								variant={"outline"}
+								onClick={goToNext}
+								aria-label="Next image"
+								className="absolute right-0 top-1/2 z-10 -translate-y-1/2 transform rounded-full"
+							>
+								<ChevronRight className="h-6 w-6" />
+							</Button>
+						</>
+					)}
+				</div>
 			</div>
 
-			<div className="relative flex-grow">
-				{images.length > 0 && (
-					<div className="hidden lg:block">
-						<Image
-							width={696}
-							height={696}
-							src={images[activeIndex].url}
-							alt={`Image ${activeIndex}`}
-							className="rounded-lg"
-						/>
-					</div>
-				)}
-				<div className="hidden md:flex lg:hidden">
-					<div className="w-1/2">
-						<Image
-							width={348}
-							height={348}
-							src={images[activeIndex].url}
-							alt={`Image ${activeIndex}`}
-							className="rounded-lg"
-						/>
-					</div>
-					<div className="w-1/2">
-						<Image
-							width={348}
-							height={348}
-							src={getNextIndexForMd(activeIndex, images).url}
-							alt={`Image ${getNextIndexForMd(activeIndex, images).alt}`}
-							className="rounded-lg"
-						/>
-					</div>
-				</div>
-				<div className="block md:hidden">
-					<Image
-						width={348}
-						height={348}
-						src={images[activeIndex].url}
-						alt={`Image ${activeIndex}`}
-						className="mx-auto rounded-lg"
-					/>
-				</div>
-				{images.length > 1 && (
-					<>
-						<Button
-							variant={"outline"}
-							onClick={goToPrevious}
-							aria-label="Previous image"
-							className="absolute left-0 top-1/2 z-10 -translate-y-1/2 transform rounded-full" // Removed lg-specific classes
-						>
-							<ChevronLeft className="h-6 w-6" />
-						</Button>
-						<Button
-							variant={"outline"}
-							onClick={goToNext}
-							aria-label="Next image"
-							className="absolute right-0 top-1/2 z-10 -translate-y-1/2 transform rounded-full" // Removed lg-specific classes
-						>
-							<ChevronRight className="h-6 w-6" />
-						</Button>
-					</>
-				)}
-			</div>
-			<div className="absolute bottom-0 left-0 right-0 flex justify-center space-x-2 p-4 md:pb-8 lg:hidden">
+			{/* Bullets - umieszczone pod obrazem głównym, ukryte na ekranach lg */}
+			<div className="flex justify-center space-x-2 p-4 md:pb-8 lg:hidden">
 				{images.map((_, index) => (
 					<button
 						key={index}
