@@ -10,7 +10,7 @@ import { Input } from "@/components/ui/input";
 
 export const SearchInput = () => {
 	const [searchTerm, setSearchTerm] = useState<string>("");
-	const debouncedSearchTerm = useDebounce(searchTerm, 500);
+	const debouncedSearchTerm = useDebounce(searchTerm, 700);
 	const router = useRouter();
 
 	const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
