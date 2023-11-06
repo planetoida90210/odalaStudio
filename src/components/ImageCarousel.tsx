@@ -5,7 +5,16 @@ import Image from "next/image";
 import { ChevronLeft, ChevronRight, Circle } from "lucide-react";
 import { Button } from "./ui/button";
 
-export const ImageCarousel = ({ images }) => {
+interface Image {
+	url: string;
+	alt?: string;
+}
+
+interface ImageCarouselProps {
+	images: Image[];
+}
+
+export const ImageCarousel = ({ images }: ImageCarouselProps) => {
 	const [activeIndex, setActiveIndex] = useState(0);
 
 	const goToPrevious = () => {
@@ -16,11 +25,11 @@ export const ImageCarousel = ({ images }) => {
 		setActiveIndex((prevIndex) => (prevIndex + 1) % images.length);
 	};
 
-	const goToSlide = (index) => {
+	const goToSlide = (index: number) => {
 		setActiveIndex(index);
 	};
 
-	const getNextIndexForMd = (currentIndex, imagesArray) => {
+	const getNextIndexForMd = (currentIndex: number, imagesArray: Image[]) => {
 		const nextIndex = currentIndex + 1 >= imagesArray.length ? 0 : currentIndex + 1;
 		return imagesArray[nextIndex];
 	};
@@ -118,8 +127,7 @@ export const ImageCarousel = ({ images }) => {
 					)}
 				</div>
 			</div>
-
-			{/* Bullets - umieszczone pod obrazem głównym, ukryte na ekranach lg */}
+			{/* Bullets for sm and md screens */}
 			<div className="flex justify-center space-x-2 p-4 md:pb-8 lg:hidden">
 				{images.map((_, index) => (
 					<button
