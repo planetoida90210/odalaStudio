@@ -30,7 +30,7 @@ export const SearchInput = () => {
 			value={searchTerm}
 			type="search"
 			onChange={handleChange}
-			className="md:scale-none scale-1 w-1/2 md:w-full"
+			className="w-1/2  text-[16px] md:w-full"
 		/>
 	);
 };
