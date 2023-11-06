@@ -1,11 +1,13 @@
 import { StarIcon } from "lucide-react";
-import Image from "next/image";
+
 import { type Metadata } from "next";
+import Image from "next/image";
 import { getSingleProductById } from "@/api/products";
 import { formatMoney } from "@/lib/utils";
 
 import { SizePicker } from "@/components/SizePicker";
 import { ColorPicker } from "@/components/ColorPicker";
+import { ImageCarousel } from "@/components/ImageCarousel";
 
 export async function generateMetadata({
 	params,
@@ -43,18 +45,20 @@ export default async function SingleProductPage({ params }: { params: { productI
 				{/* Image gallery */}
 				<div className="lg:col-span-5 lg:row-span-3 lg:mt-0">
 					<h2 className="sr-only">Images</h2>
-					{product.images.map((image, index) => (
-						<Image
-							width={696}
-							height={696}
-							key={index}
-							src={image.url}
-							alt={product.name}
-							className="rounded-lg"
-						/>
-					))}
+					{product.images.length > 1 ? (
+						<ImageCarousel images={product.images} />
+					) : (
+						<div className="lg:flex lg:justify-center">
+							<Image
+								width={696}
+								height={696}
+								src={product.images[0].url}
+								alt={product.name}
+								className="rounded-lg"
+							/>
+						</div>
+					)}
 				</div>
-
 				<div className="lg:col-span-7">
 					<div className="flex justify-between">
 						<h1 className="text-xl font-medium text-zinc-900">{product.name}</h1>
