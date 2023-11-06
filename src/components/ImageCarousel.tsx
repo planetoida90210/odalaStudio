@@ -20,7 +20,6 @@ export const ImageCarousel = ({ images }) => {
 		setActiveIndex(index);
 	};
 
-	// Function to get the next image index for md screens
 	const getNextIndexForMd = (currentIndex, imagesArray) => {
 		const nextIndex = currentIndex + 1 >= imagesArray.length ? 0 : currentIndex + 1;
 		return imagesArray[nextIndex];
@@ -28,7 +27,6 @@ export const ImageCarousel = ({ images }) => {
 
 	return (
 		<div className="relative flex items-center lg:items-start">
-			{/* Thumbnails for lg and larger screens */}
 			<div className="hidden lg:mr-4 lg:flex lg:flex-col lg:space-y-2">
 				{images.map((image, index) => (
 					<button
@@ -50,9 +48,7 @@ export const ImageCarousel = ({ images }) => {
 				))}
 			</div>
 
-			{/* Main image container */}
-			<div className="flex-grow">
-				{/* Image for lg and larger */}
+			<div className="relative flex-grow">
 				{images.length > 0 && (
 					<div className="hidden lg:block">
 						<Image
@@ -64,8 +60,6 @@ export const ImageCarousel = ({ images }) => {
 						/>
 					</div>
 				)}
-
-				{/* Images for md only */}
 				<div className="hidden md:flex lg:hidden">
 					<div className="w-1/2">
 						<Image
@@ -86,8 +80,6 @@ export const ImageCarousel = ({ images }) => {
 						/>
 					</div>
 				</div>
-
-				{/* Single image for sm and smaller */}
 				<div className="block md:hidden">
 					<Image
 						width={348}
@@ -97,15 +89,13 @@ export const ImageCarousel = ({ images }) => {
 						className="mx-auto rounded-lg"
 					/>
 				</div>
-
-				{/* Navigation buttons centered */}
 				{images.length > 1 && (
 					<>
 						<Button
 							variant={"outline"}
 							onClick={goToPrevious}
 							aria-label="Previous image"
-							className="absolute left-0 z-10 rounded-full lg:-left-12 lg:top-1/2 lg:-translate-y-1/2 lg:transform"
+							className="absolute left-0 top-1/2 z-10 -translate-y-1/2 transform rounded-full" // Removed lg-specific classes
 						>
 							<ChevronLeft className="h-6 w-6" />
 						</Button>
@@ -113,16 +103,14 @@ export const ImageCarousel = ({ images }) => {
 							variant={"outline"}
 							onClick={goToNext}
 							aria-label="Next image"
-							className="absolute right-0 z-10 rounded-full lg:-right-12 lg:top-1/2 lg:-translate-y-1/2 lg:transform"
+							className="absolute right-0 top-1/2 z-10 -translate-y-1/2 transform rounded-full" // Removed lg-specific classes
 						>
 							<ChevronRight className="h-6 w-6" />
 						</Button>
 					</>
 				)}
 			</div>
-
-			{/* Bullets for md and smaller screens */}
-			<div className="absolute bottom-0 left-0 right-0 flex justify-center space-x-2 p-4 md:hidden">
+			<div className="absolute bottom-0 left-0 right-0 flex justify-center space-x-2 p-4 md:pb-8 lg:hidden">
 				{images.map((_, index) => (
 					<button
 						key={index}
