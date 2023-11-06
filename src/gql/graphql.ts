@@ -65,6 +65,7 @@ export type Asset = Node & {
   scheduledIn: Array<ScheduledOperation>;
   /** The file size */
   size?: Maybe<Scalars['Float']['output']>;
+  soundProduct: Array<Product>;
   /** System stage field */
   stage: Stage;
   /** The time the document was updated */
@@ -155,6 +156,20 @@ export type AssetScheduledInArgs = {
 
 
 /** Asset system model */
+export type AssetSoundProductArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  forceParentLocale?: InputMaybe<Scalars['Boolean']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  locales?: InputMaybe<Array<Locale>>;
+  orderBy?: InputMaybe<ProductOrderByInput>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<ProductWhereInput>;
+};
+
+
+/** Asset system model */
 export type AssetUpdatedAtArgs = {
   variation?: SystemDateTimeFieldVariation;
 };
@@ -198,6 +213,7 @@ export type AssetCreateInput = {
   mimeType?: InputMaybe<Scalars['String']['input']>;
   productImages?: InputMaybe<ProductCreateManyInlineInput>;
   size?: InputMaybe<Scalars['Float']['input']>;
+  soundProduct?: InputMaybe<ProductCreateManyInlineInput>;
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
   width?: InputMaybe<Scalars['Float']['input']>;
 };
@@ -316,6 +332,9 @@ export type AssetManyWhereInput = {
   scheduledIn_every?: InputMaybe<ScheduledOperationWhereInput>;
   scheduledIn_none?: InputMaybe<ScheduledOperationWhereInput>;
   scheduledIn_some?: InputMaybe<ScheduledOperationWhereInput>;
+  soundProduct_every?: InputMaybe<ProductWhereInput>;
+  soundProduct_none?: InputMaybe<ProductWhereInput>;
+  soundProduct_some?: InputMaybe<ProductWhereInput>;
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
   /** All values greater than the given value. */
   updatedAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
@@ -373,6 +392,7 @@ export type AssetUpdateInput = {
   mimeType?: InputMaybe<Scalars['String']['input']>;
   productImages?: InputMaybe<ProductUpdateManyInlineInput>;
   size?: InputMaybe<Scalars['Float']['input']>;
+  soundProduct?: InputMaybe<ProductUpdateManyInlineInput>;
   width?: InputMaybe<Scalars['Float']['input']>;
 };
 
@@ -657,6 +677,9 @@ export type AssetWhereInput = {
   size_not?: InputMaybe<Scalars['Float']['input']>;
   /** All values that are not contained in given list. */
   size_not_in?: InputMaybe<Array<InputMaybe<Scalars['Float']['input']>>>;
+  soundProduct_every?: InputMaybe<ProductWhereInput>;
+  soundProduct_none?: InputMaybe<ProductWhereInput>;
+  soundProduct_some?: InputMaybe<ProductWhereInput>;
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
   /** All values greater than the given value. */
   updatedAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
@@ -5369,6 +5392,7 @@ export type Product = Node & {
   reviews: Array<Review>;
   scheduledIn: Array<ScheduledOperation>;
   slug: Scalars['String']['output'];
+  sound: Array<Asset>;
   /** System stage field */
   stage: Stage;
   /** The time the document was updated */
@@ -5516,6 +5540,19 @@ export type ProductScheduledInArgs = {
 };
 
 
+export type ProductSoundArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  forceParentLocale?: InputMaybe<Scalars['Boolean']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  locales?: InputMaybe<Array<Locale>>;
+  orderBy?: InputMaybe<AssetOrderByInput>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<AssetWhereInput>;
+};
+
+
 export type ProductUpdatedAtArgs = {
   variation?: SystemDateTimeFieldVariation;
 };
@@ -5534,7 +5571,8 @@ export type ProductColor =
   | 'ORANGE'
   | 'PINK'
   | 'PURPLE'
-  | 'WHITE';
+  | 'WHITE'
+  | 'YELLOW';
 
 export type ProductColorVariant = Node & {
   color: ProductColor;
@@ -6110,6 +6148,7 @@ export type ProductCreateInput = {
   reviews?: InputMaybe<ReviewCreateManyInlineInput>;
   /** slug input for default locale (en) */
   slug: Scalars['String']['input'];
+  sound?: InputMaybe<AssetCreateManyInlineInput>;
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
 };
 
@@ -6241,6 +6280,9 @@ export type ProductManyWhereInput = {
   scheduledIn_every?: InputMaybe<ScheduledOperationWhereInput>;
   scheduledIn_none?: InputMaybe<ScheduledOperationWhereInput>;
   scheduledIn_some?: InputMaybe<ScheduledOperationWhereInput>;
+  sound_every?: InputMaybe<AssetWhereInput>;
+  sound_none?: InputMaybe<AssetWhereInput>;
+  sound_some?: InputMaybe<AssetWhereInput>;
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
   /** All values greater than the given value. */
   updatedAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
@@ -6278,9 +6320,13 @@ export type ProductOrderByInput =
   | 'updatedAt_DESC';
 
 export type ProductSize =
+  | 'BEAT'
+  | 'EP'
   | 'L'
+  | 'LP'
   | 'M'
   | 'S'
+  | 'SINGLE'
   | 'XL'
   | 'XS'
   | 'XXL';
@@ -6858,6 +6904,7 @@ export type ProductUpdateInput = {
   reviews?: InputMaybe<ReviewUpdateManyInlineInput>;
   /** slug input for default locale (en) */
   slug?: InputMaybe<Scalars['String']['input']>;
+  sound?: InputMaybe<AssetUpdateManyInlineInput>;
 };
 
 export type ProductUpdateLocalizationDataInput = {
@@ -7136,6 +7183,9 @@ export type ProductWhereInput = {
   slug_not_starts_with?: InputMaybe<Scalars['String']['input']>;
   /** All values starting with the given string. */
   slug_starts_with?: InputMaybe<Scalars['String']['input']>;
+  sound_every?: InputMaybe<AssetWhereInput>;
+  sound_none?: InputMaybe<AssetWhereInput>;
+  sound_some?: InputMaybe<AssetWhereInput>;
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
   /** All values greater than the given value. */
   updatedAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
@@ -9939,7 +9989,7 @@ export type ProductGetSingleByIdQueryVariables = Exact<{
 }>;
 
 
-export type ProductGetSingleByIdQuery = { product?: { id: string, name: string, description: string, createdAt: unknown, price: number, slug: string, images: Array<{ id: string, url: string, size?: number | null }>, reviews: Array<{ content: string, createdAt: unknown, email: string, headline: string, name: string, id: string, rating?: number | null }>, categories: Array<{ id: string, name: string, slug: string }>, productSizeVariants: Array<{ id: string, name: string, stock?: number | null, size: ProductSize }>, productColorVariant?: { color: ProductColor, id: string, name: string } | null } | null };
+export type ProductGetSingleByIdQuery = { product?: { id: string, name: string, description: string, createdAt: unknown, price: number, slug: string, images: Array<{ id: string, url: string, size?: number | null }>, reviews: Array<{ content: string, createdAt: unknown, email: string, headline: string, name: string, id: string, rating?: number | null }>, categories: Array<{ id: string, name: string, slug: string }>, productSizeVariants: Array<{ id: string, name: string, stock?: number | null, size: ProductSize }>, productColorVariant?: { color: ProductColor, id: string, name: string } | null, sound: Array<{ fileName: string, id: string, mimeType?: string | null, url: string }> } | null };
 
 export type ProductsByNameQueryVariables = Exact<{
   name: Scalars['String']['input'];
@@ -10052,6 +10102,12 @@ export const ProductGetSingleByIdDocument = new TypedDocumentString(`
       color
       id
       name
+    }
+    sound {
+      fileName
+      id
+      mimeType
+      url
     }
   }
 }
