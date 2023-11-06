@@ -19,27 +19,32 @@ export const ColorPicker = ({
 			<RadioGroup value={currentColor || ""} className="mt-2" name="color">
 				<Label className="sr-only">Wybierz kolor</Label>
 				<div className="grid grid-cols-3 gap-3 sm:grid-cols-6">
-					{variants.map((variant) => (
-						<div key={variant.id}>
-							<RadioGroupItem value={variant.name} id={variant.id} className="peer sr-only" />
-							<Label
-								htmlFor={variant.id}
-								className={`flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary`}
-							>
-								<Link
-									href={`?color=${variant?.name.toLowerCase()}`}
-									className="w-full p-4 text-center"
-									style={{
-										backgroundColor: variant?.color.toLowerCase(),
-										color:
-											variant?.color.toLowerCase() === "black" ? "white" : "rgba(0, 0, 0, 0.6)", // Możemy dostosować wartość rgba dla szarego koloru tekstu
-									}}
+					{variants.map((variant) => {
+						const isHexColor = variant.name.startsWith("#");
+						const backgroundColor = isHexColor ? variant.name : variant.color.toLowerCase();
+						const textColor = backgroundColor === "black" ? "white" : "rgba(0, 0, 0, 0.6)";
+
+						return (
+							<div key={variant.id}>
+								<RadioGroupItem value={variant.color} id={variant.id} className="peer sr-only" />
+								<Label
+									htmlFor={variant.id}
+									className={`flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover hover:bg-accent hover:text-accent-foreground peer-checked:border-primary [&:has(.peer-checked)]:border-primary`}
 								>
-									{variant.name}
-								</Link>
-							</Label>
-						</div>
-					))}
+									<Link
+										href={`?color=${encodeURIComponent(variant.color)}`}
+										className="w-full p-4 text-center"
+										style={{
+											backgroundColor: backgroundColor,
+											color: textColor,
+										}}
+									>
+										{isHexColor ? variant.color : variant.name}
+									</Link>
+								</Label>
+							</div>
+						);
+					})}
 				</div>
 			</RadioGroup>
 		</div>

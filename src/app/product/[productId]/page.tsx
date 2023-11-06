@@ -34,7 +34,7 @@ export default async function SingleProductPage({ params }: { params: { productI
 	const product = await getSingleProductById(params.productId);
 
 	if (!product) {
-		return <div>There is no product with this id.</div>;
+		return <div>Nie znaleziono produktu.</div>;
 	}
 
 	return (
@@ -78,12 +78,12 @@ export default async function SingleProductPage({ params }: { params: { productI
 					</div>
 					{/* Product details */}
 					<div className="mt-10">
-						<h2 className="text-sm font-medium text-zinc-900">Description</h2>
+						<h2 className="text-sm font-medium text-zinc-900">Opis</h2>
 						<div className="prose prose-sm mt-4 text-zinc-500">{product.description}</div>
 					</div>
 					{/* Reviews placeholder */}
 					<div className="mt-4 w-full">
-						<h2 className="text-lg font-medium text-zinc-900">Rating</h2>
+						<h2 className="text-lg font-medium text-zinc-900">Oceny produktu</h2>
 						<div className="flex items-center">
 							<p className="text-sm text-zinc-700">
 								{5.0}

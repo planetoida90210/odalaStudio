@@ -13,11 +13,11 @@ export const SizePicker = ({
 	return (
 		<div className="mt-8">
 			<div className="flex items-center justify-between">
-				<h2 className="text-sm font-medium text-zinc-900">Size</h2>
+				<h2 className="text-sm font-medium text-zinc-900">Rozmiar</h2>
 			</div>
 
 			<RadioGroup value={currentSize || ""} className="mt-2" name="size">
-				<Label className="sr-only">Choose a size</Label>
+				<Label className="sr-only">Wybierz rozmiar</Label>
 				<div className="grid grid-cols-3 gap-3 sm:grid-cols-6">
 					{variants.map((variant) => (
 						<div key={variant.id}>
