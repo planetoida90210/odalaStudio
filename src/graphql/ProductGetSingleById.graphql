@@ -36,5 +36,11 @@ query ProductGetSingleById($id: ID!) {
 			id
 			name
 		}
+		sound {
+			id
+			mimeType
+			url
+			fileName
+		}
 	}
 }

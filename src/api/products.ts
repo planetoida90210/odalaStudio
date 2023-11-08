@@ -128,6 +128,12 @@ export const getSingleProductById = async (id: string): Promise<SingleProductTyp
 					color: product.productColorVariant.color,
 			  }
 			: null,
+		sound: product.sound?.map((s) => ({
+			id: s.id,
+			mimeType: s.mimeType,
+			url: s.url,
+			fileName: s.fileName,
+		})),
 	};
 };
 

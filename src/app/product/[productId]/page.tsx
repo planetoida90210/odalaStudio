@@ -1,13 +1,14 @@
-import { StarIcon } from "lucide-react";
-
+// page.tsx
+import React from "react";
 import { type Metadata } from "next";
+import { StarIcon } from "lucide-react";
 import Image from "next/image";
 import { getSingleProductById } from "@/api/products";
 import { formatMoney } from "@/lib/utils";
-
 import { SizePicker } from "@/components/SizePicker";
 import { ColorPicker } from "@/components/ColorPicker";
 import { ImageCarousel } from "@/components/ImageCarousel";
+import { Player } from "@/components/Player";
 
 export async function generateMetadata({
 	params,
@@ -38,6 +39,8 @@ export default async function SingleProductPage({ params }: { params: { productI
 	if (!product) {
 		return <div>Nie znaleziono produktu.</div>;
 	}
+
+	const sound = product.sound?.length ? product.sound[0] : null;
 
 	return (
 		<main className="mx-auto mt-8 max-w-2xl px-4 pb-16 sm:px-6 sm:pb-24 lg:max-w-7xl lg:px-8">
@@ -80,9 +83,21 @@ export default async function SingleProductPage({ params }: { params: { productI
 							</div>
 						)}
 					</div>
+					{/* Player above description on desktop */}
+					{sound && (
+						<div className="hidden lg:block">
+							<Player url={sound.url} name={product.name} image={product.images[0].url} />
+						</div>
+					)}
 					{/* Product details */}
 					<div className="mt-10">
 						<h2 className="text-sm font-medium text-zinc-900">Opis</h2>
+						{/* Player above description on mobile */}
+						{sound && (
+							<div className="block lg:hidden">
+								<Player url={sound.url} name={product.name} image={product.images[0].url} />
+							</div>
+						)}
 						<div className="prose prose-sm mt-4 text-zinc-500">{product.description}</div>
 					</div>
 					{/* Reviews placeholder */}

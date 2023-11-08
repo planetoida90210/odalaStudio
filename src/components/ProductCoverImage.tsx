@@ -1,4 +1,5 @@
 import Image from "next/image";
+
 import { Button } from "@/components/ui/button";
 
 export const ProductCoverImage = ({ src, alt }: { src: string; alt: string }) => {

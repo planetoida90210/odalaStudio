@@ -1,5 +1,6 @@
 import { type Category } from "@/types/categoriesType";
 import { type ReviewType } from "@/types/reviewType";
+import { type SoundType } from "@/types/soundType";
 
 export type ImageType = {
 	id: string;
@@ -31,4 +32,5 @@ export type SingleProductType = {
 	categories: Category[];
 	productSizeVariants: SizeVariantType[];
 	productColorVariant?: ColorVariantType | null;
+	sound?: SoundType[];
 };
