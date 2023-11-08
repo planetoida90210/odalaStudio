@@ -39,7 +39,7 @@ export const AudioControls: React.FC<AudioControlsProps> = ({
 				)}
 			</button>
 			<SkipForward size={24} className="cursor-pointer" />
-			<div>Duration: {formattedTime(duration)}</div>
+			<div>Czas: {formattedTime(duration)}</div>
 			<input
 				type="range"
 				value={currentTime}
