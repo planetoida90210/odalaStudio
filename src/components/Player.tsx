@@ -1,4 +1,5 @@
 "use client";
+import { PauseIcon, PlayIcon } from "lucide-react";
 import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
 
@@ -75,15 +76,24 @@ export const Player = ({ url, name, image }: { url: string; name: string; image:
 	};
 
 	return (
-		<div className="flex flex-col items-center justify-between bg-gray-800 p-4 text-white sm:flex-row">
-			{/* Miniaturka produktu */}
-			<Image src={image} alt={name} width={48} height={48} className="mr-4 rounded-full" />
+		<div className="flex items-center justify-between rounded bg-gray-100 p-4 text-black sm:flex-row">
+			<Image
+				src={image}
+				alt={name}
+				width={48}
+				height={48}
+				className="mr-4 hidden rounded-full md:block"
+			/>
 
 			<button
 				onClick={togglePlayPause}
-				className="mr-4 flex h-12 w-12 items-center justify-center rounded-full bg-gray-700"
+				className="mr-4 flex h-12 w-12 items-center justify-center rounded-full bg-white shadow"
 			>
-				{isPlaying ? "Pause" : "Play"}
+				{isPlaying ? (
+					<PauseIcon className="h-6 w-6 text-black" />
+				) : (
+					<PlayIcon className="h-6 w-6 text-black" />
+				)}
 			</button>
 
 			<span className="flex-1 truncate">{name}</span>

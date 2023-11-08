@@ -84,20 +84,11 @@ export default async function SingleProductPage({ params }: { params: { productI
 						)}
 					</div>
 					{/* Player above description on desktop */}
-					{sound && (
-						<div className="hidden lg:block">
-							<Player url={sound.url} name={product.name} image={product.images[0].url} />
-						</div>
-					)}
+					{sound && <Player url={sound.url} name={product.name} image={product.images[0].url} />}
 					{/* Product details */}
 					<div className="mt-10">
 						<h2 className="text-sm font-medium text-zinc-900">Opis</h2>
-						{/* Player above description on mobile */}
-						{sound && (
-							<div className="block lg:hidden">
-								<Player url={sound.url} name={product.name} image={product.images[0].url} />
-							</div>
-						)}
+
 						<div className="prose prose-sm mt-4 text-zinc-500">{product.description}</div>
 					</div>
 					{/* Reviews placeholder */}
