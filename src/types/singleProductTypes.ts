@@ -31,5 +31,4 @@ export type SingleProductType = {
 	categories: Category[];
 	productSizeVariants: SizeVariantType[];
 	productColorVariant?: ColorVariantType | null;
-	sound?: SoundType | null;
 };
