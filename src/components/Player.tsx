@@ -1,6 +1,6 @@
 "use client";
-
 import React, { useState, useEffect, useRef } from "react";
+import { AudioControls } from "@/components/AudioControls";
 
 interface PlayerProps {
 	url: string;
@@ -11,69 +11,77 @@ export const Player: React.FC<PlayerProps> = ({ url }) => {
 	const [isPlaying, setIsPlaying] = useState<boolean>(false);
 	const [duration, setDuration] = useState<number>(0);
 	const [currentTime, setCurrentTime] = useState<number>(0);
+	const [volume, setVolume] = useState<number>(1);
+	const [isMuted, setIsMuted] = useState<boolean>(false);
 
 	useEffect(() => {
 		audioRef.current = new Audio(url);
-
-		const setAudioData = () => {
+		audioRef.current.addEventListener("loadedmetadata", () => {
 			setDuration(audioRef.current!.duration);
+		});
+
+		audioRef.current.addEventListener("timeupdate", () => {
 			setCurrentTime(audioRef.current!.currentTime);
-		};
-
-		const setAudioTime = () => setCurrentTime(audioRef.current!.currentTime);
-
-		audioRef.current.addEventListener("loadeddata", setAudioData);
-		audioRef.current.addEventListener("timeupdate", setAudioTime);
+		});
 
 		return () => {
-			if (audioRef.current) {
-				audioRef.current.removeEventListener("loadeddata", setAudioData);
-				audioRef.current.removeEventListener("timeupdate", setAudioTime);
-			}
+			audioRef.current?.pause();
+			audioRef.current = null;
 		};
 	}, [url]);
 
-	const togglePlayPause = () => {
-		setIsPlaying(!isPlaying);
-		if (!isPlaying) {
-			void audioRef.current?.play().catch((e) => {
-				console.error("Error trying to play the audio:", e);
-			});
+	useEffect(() => {
+		const play = async () => {
+			if (audioRef.current) {
+				try {
+					await audioRef.current.play();
+				} catch (e) {
+					console.error("Error during playback:", e);
+				}
+			}
+		};
+
+		if (isPlaying) {
+			void play();
 		} else {
 			audioRef.current?.pause();
 		}
+	}, [isPlaying]);
+
+	const togglePlayPause = () => {
+		setIsPlaying(!isPlaying);
 	};
 
-	const formatTime = (time: number) => {
-		const minutes = Math.floor(time / 60) || 0;
-		const seconds = Math.round(time - minutes * 60) || 0;
-		return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+	const handleVolumeChange = (newVolume: number) => {
+		setVolume(newVolume);
+		if (audioRef.current) {
+			audioRef.current.volume = newVolume;
+		}
+	};
+
+	const toggleMute = () => {
+		setIsMuted(!isMuted);
+		if (audioRef.current) {
+			audioRef.current.muted = !isMuted;
+		}
 	};
 
 	return (
-		<div className="fixed bottom-0 left-0 right-0 flex items-center justify-between bg-white p-4">
-			<button
-				onClick={togglePlayPause}
-				className="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
-			>
-				{isPlaying ? "Pause" : "Play"}
-			</button>
-			<div>Duration: {formatTime(duration)}</div>
-			<div>Current Time: {formatTime(currentTime)}</div>
-			<input
-				type="range"
-				value={currentTime}
-				step="1"
-				min="0"
-				max={duration}
-				onChange={(e) => {
-					const time = Number(e.target.value);
+		<div className="fixed bottom-0 left-0 right-0">
+			<AudioControls
+				isPlaying={isPlaying}
+				onPlayPauseClick={togglePlayPause}
+				duration={duration}
+				currentTime={currentTime}
+				onTimeChange={(time: number) => {
 					setCurrentTime(time);
 					if (audioRef.current) {
 						audioRef.current.currentTime = time;
 					}
 				}}
-				className="h-2 w-full cursor-pointer appearance-none rounded-lg bg-gray-200 dark:bg-gray-700"
+				onVolumeChange={handleVolumeChange}
+				volume={volume}
+				onMute={toggleMute}
 			/>
 		</div>
 	);
