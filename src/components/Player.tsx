@@ -18,6 +18,14 @@ export const Player = ({ url, name, image }: { url: string; name: string; image:
 		return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
 	};
 
+	const handleTimeSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const newTime = Number(e.target.value);
+		if (audioRef.current) {
+			audioRef.current.currentTime = newTime;
+		}
+		setCurrentTime(newTime);
+	};
+
 	useEffect(() => {
 		if (typeof Audio !== "undefined") {
 			const audioInstance = new Audio(url);
@@ -106,7 +114,7 @@ export const Player = ({ url, name, image }: { url: string; name: string; image:
 				step="1"
 				min="0"
 				max={duration}
-				onChange={(e) => setCurrentTime(Number(e.target.value))}
+				onChange={handleTimeSliderChange}
 				className="h-2 flex-1 cursor-pointer rounded-full bg-gray-700"
 			/>
 
