@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-import { Button } from "@/components/ui/button";
+// import { Button } from "@/components/ui/button";
 
 export const ProductCoverImage = ({ src, alt }: { src: string; alt: string }) => {
 	return (
@@ -29,9 +29,9 @@ export const ProductCoverImage = ({ src, alt }: { src: string; alt: string }) =>
 					duration-300 
 					group-hover:opacity-100"
 			>
-				<Button variant={"outline"} className="border-2 border-zinc-900 bg-zinc-50">
+				{/* <Button variant={"outline"} className="border-2 border-zinc-900 bg-zinc-50">
 					{"Zobacz"}
-				</Button>
+				</Button> */}
 			</div>
 		</div>
 	);

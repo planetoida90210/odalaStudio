@@ -111,7 +111,7 @@ export const ImageCarousel = ({ images }: ImageCarouselProps) => {
 								variant={"outline"}
 								onClick={goToPrevious}
 								aria-label="Previous image"
-								className="absolute left-0 top-1/2 z-10 -translate-y-1/2 transform rounded-full"
+								className="absolute left-0 top-1/2 z-10 h-12 w-12 -translate-y-1/2 transform rounded-full"
 							>
 								<ChevronLeft className="h-6 w-6" />
 							</Button>
@@ -119,7 +119,7 @@ export const ImageCarousel = ({ images }: ImageCarouselProps) => {
 								variant={"outline"}
 								onClick={goToNext}
 								aria-label="Next image"
-								className="absolute right-0 top-1/2 z-10 -translate-y-1/2 transform rounded-full"
+								className="absolute right-0 top-1/2 z-10 h-12 w-12 -translate-y-1/2 transform rounded-full"
 							>
 								<ChevronRight className="h-6 w-6" />
 							</Button>

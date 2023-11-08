@@ -2,6 +2,7 @@
 import { PauseIcon, PlayIcon } from "lucide-react";
 import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
+import { Button } from "@/components/ui/button";
 
 export const Player = ({ url, name, image }: { url: string; name: string; image: string }) => {
 	const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -85,16 +86,17 @@ export const Player = ({ url, name, image }: { url: string; name: string; image:
 				className="mr-4 hidden rounded-full md:block"
 			/>
 
-			<button
+			<Button
+				variant="outline"
 				onClick={togglePlayPause}
 				className="mr-4 flex h-12 w-12 items-center justify-center rounded-full bg-white shadow"
 			>
 				{isPlaying ? (
-					<PauseIcon className="h-6 w-6 text-black" />
+					<PauseIcon className="h-8 w-8 text-black" />
 				) : (
-					<PlayIcon className="h-6 w-6 text-black" />
+					<PlayIcon className="mx-auto h-8 w-8 text-black" />
 				)}
-			</button>
+			</Button>
 
 			<span className="flex-1 truncate">{name}</span>
 
