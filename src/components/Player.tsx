@@ -1,7 +1,9 @@
 "use client";
 import { PauseIcon, PlayIcon } from "lucide-react";
-import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
+import Image from "next/image";
+
+import { SoundSlider } from "@/components/SoundSlider";
 import { Button } from "@/components/ui/button";
 
 export const Player = ({ url, name, image }: { url: string; name: string; image: string }) => {
@@ -16,14 +18,6 @@ export const Player = ({ url, name, image }: { url: string; name: string; image:
 		const minutes = Math.floor(time / 60);
 		const seconds = Math.floor(time % 60);
 		return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
-	};
-
-	const handleTimeSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const newTime = Number(e.target.value);
-		if (audioRef.current) {
-			audioRef.current.currentTime = newTime;
-		}
-		setCurrentTime(newTime);
 	};
 
 	useEffect(() => {
@@ -107,31 +101,30 @@ export const Player = ({ url, name, image }: { url: string; name: string; image:
 			</Button>
 
 			<span className="flex-1 truncate">{name}</span>
+			<div className="mr-4 flex w-full items-center justify-end">
+				<div className="w-full">
+					<SoundSlider
+						min={0}
+						max={duration}
+						value={currentTime}
+						step={1}
+						onChange={(value) => {
+							setCurrentTime(value);
+							if (audioRef.current) {
+								audioRef.current.currentTime = value;
+							}
+						}}
+						formatTime={formatTime}
+					/>
+				</div>
 
-			<input
-				type="range"
-				value={currentTime}
-				step="1"
-				min="0"
-				max={duration}
-				onChange={handleTimeSliderChange}
-				className="h-2 flex-1 cursor-pointer rounded-full bg-gray-700"
-			/>
-
-			<div className="flex flex-col items-center sm:ml-4 sm:flex-row">
-				<span className="mr-2">{formatTime(currentTime)}</span>
-				<span>{formatTime(duration - currentTime)}</span>
-			</div>
-
-			<div className="ml-4 flex items-center">
-				<input
-					type="range"
+				<SoundSlider
+					min={0}
+					max={1}
 					value={volume}
-					step="0.01"
-					min="0"
-					max="1"
-					onChange={(e) => setVolume(Number(e.target.value))}
-					className="h-2 w-24 cursor-pointer rounded-full bg-gray-700"
+					step={0.01}
+					onChange={(value) => setVolume(value)}
+					formatTime={undefined}
 				/>
 			</div>
 		</div>

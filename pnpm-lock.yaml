@@ -38,6 +38,9 @@ dependencies:
   next:
     specifier: 13.5.6
     version: 13.5.6(@babel/core@7.23.2)(react-dom@18.2.0)(react@18.2.0)
+  postcss-nested:
+    specifier: ^6.0.1
+    version: 6.0.1(postcss@8.4.31)
   react:
     specifier: ^18
     version: 18.2.0
