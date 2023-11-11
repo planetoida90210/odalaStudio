@@ -117,15 +117,16 @@ export const Player = ({ url, name, image }: { url: string; name: string; image:
 						formatTime={formatTime}
 					/>
 				</div>
-
-				<SoundSlider
-					min={0}
-					max={1}
-					value={volume}
-					step={0.01}
-					onChange={(value) => setVolume(value)}
-					formatTime={undefined}
-				/>
+				<div className="hidden md:block">
+					<SoundSlider
+						min={0}
+						max={1}
+						value={volume}
+						step={0.01}
+						onChange={(value) => setVolume(value)}
+						formatTime={undefined}
+					/>
+				</div>
 			</div>
 		</div>
 	);

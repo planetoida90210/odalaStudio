@@ -20,7 +20,6 @@ export const SoundSlider = ({
 	return (
 		<div className="flex items-center">
 			<div className="relative w-full">
-				{/* Warunkowe renderowanie etykiet czasu, tylko jeśli formatTime jest dostarczone */}
 				{formatTime && (
 					<div className="absolute -top-5 left-0 right-0 mx-2 flex justify-between">
 						<span className="text-xs text-gray-700">{formatTime(value)}</span>
@@ -28,6 +27,11 @@ export const SoundSlider = ({
 					</div>
 				)}
 				<div className="slider relative">
+					<div className="slider-track"></div>
+					<div
+						className="slider-fill"
+						style={{ width: sliderFillStyle["--slider-fill-percentage"] }}
+					></div>
 					<input
 						className="slider-thumb"
 						type="range"
@@ -38,10 +42,6 @@ export const SoundSlider = ({
 						onChange={(e) => onChange(Number(e.target.value))}
 						style={sliderFillStyle}
 					/>
-					<div
-						className="slider-fill"
-						style={{ width: sliderFillStyle["--slider-fill-percentage"] }}
-					></div>
 				</div>
 			</div>
 		</div>

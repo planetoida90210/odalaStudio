@@ -86,6 +86,7 @@
 		height: 2px; /* Wysokość suwaka */
 		background: transparent; /* Tło suwaka */
 		cursor: pointer;
+		z-index: 10;
 	}
 
 	.slider-thumb::-webkit-slider-thumb {
@@ -96,6 +97,7 @@
 		height: 16px; /* Wysokość kciuka */
 		background: #facc15; /* Tło kciuka */
 		border-radius: 50%; /* Okrągły kciuk */
+		z-index: 1;
 	}
 
 	.slider-thumb::-moz-range-thumb {
@@ -123,7 +125,7 @@
 		height: 2px;
 		background: #facc15; /* Tło wypełnienia suwaka */
 		transform: translateY(-50%);
-		z-index: -1; /* Wypełnienie pod suwakiem */
+		z-index: 1;
 	}
 	.slider-fill {
 		position: absolute;
@@ -133,6 +135,15 @@
 		width: var(--slider-fill-percentage); /* Ustaw tę zmienną w JavaScript */
 		height: 2px;
 		background: #facc15; /* Tło wypełnienia suwaka */
+		transform: translateY(-50%);
+	}
+	.slider-track {
+		position: absolute;
+		top: 50%;
+		left: 0;
+		right: 0;
+		height: 2px;
+		background-color: #e5e7eb; /* Szary tło dla śladu */
 		transform: translateY(-50%);
 	}
 }
