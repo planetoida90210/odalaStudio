@@ -1,4 +1,5 @@
 "use client";
+
 import { PauseIcon, PlayIcon } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
@@ -22,7 +23,6 @@ export const Player = ({ url, name, image }: { url: string; name: string; image:
 		return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
 	};
 
-	// Initialize and clean up audio
 	useEffect(() => {
 		const audioInstance = audioRef.current;
 
@@ -37,16 +37,13 @@ export const Player = ({ url, name, image }: { url: string; name: string; image:
 		audioInstance.addEventListener("loadedmetadata", setAudioData);
 		audioInstance.addEventListener("timeupdate", setAudioTime);
 
-		// Start playing
 		if (isPlaying) {
 			audioInstance.play().catch(console.error);
 		}
 
-		// Add event listener for audio end
 		audioInstance.addEventListener("ended", () => setIsPlaying(false));
 
 		return () => {
-			// Pause and clean up on unmount
 			audioInstance.pause();
 			audioInstance.removeEventListener("loadedmetadata", setAudioData);
 			audioInstance.removeEventListener("timeupdate", setAudioTime);
@@ -54,18 +51,15 @@ export const Player = ({ url, name, image }: { url: string; name: string; image:
 		};
 	}, [url, isPlaying]);
 
-	// Volume control
 	useEffect(() => {
 		const audioInstance = audioRef.current;
 		audioInstance.volume = volume;
 	}, [volume]);
 
-	// Play/Pause toggle
 	const togglePlayPause = () => {
 		setIsPlaying(!isPlaying);
 	};
 
-	// Stop audio when route changes
 	useEffect(() => {
 		const stopAudio = () => {
 			const audioInstance = audioRef.current;
