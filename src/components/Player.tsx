@@ -1,13 +1,15 @@
 "use client";
 import { PauseIcon, PlayIcon } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
+import { usePathname } from "next/navigation";
 import Image from "next/image";
 
 import { SoundSlider } from "@/components/SoundSlider";
 import { Button } from "@/components/ui/button";
 
 export const Player = ({ url, name, image }: { url: string; name: string; image: string }) => {
-	const audioRef = useRef<HTMLAudioElement | null>(null);
+	const audioRef = useRef<HTMLAudioElement>(new Audio(url));
+	const pathname = usePathname();
 
 	const [isPlaying, setIsPlaying] = useState(false);
 	const [duration, setDuration] = useState(0);
@@ -20,63 +22,61 @@ export const Player = ({ url, name, image }: { url: string; name: string; image:
 		return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
 	};
 
+	// Initialize and clean up audio
 	useEffect(() => {
-		if (typeof Audio !== "undefined") {
-			const audioInstance = new Audio(url);
-			audioRef.current = audioInstance;
+		const audioInstance = audioRef.current;
 
-			const setAudioData = () => {
-				setDuration(audioInstance.duration);
-			};
-
-			const setAudioTime = () => {
-				setCurrentTime(audioInstance.currentTime);
-			};
-
-			audioInstance.addEventListener("loadedmetadata", setAudioData);
-			audioInstance.addEventListener("timeupdate", setAudioTime);
-
-			return () => {
-				audioInstance.removeEventListener("loadedmetadata", setAudioData);
-				audioInstance.removeEventListener("timeupdate", setAudioTime);
-			};
-		}
-	}, [url]);
-
-	useEffect(() => {
-		const playAudio = async () => {
-			if (isPlaying && audioRef.current) {
-				try {
-					await audioRef.current.play();
-				} catch (error) {
-					console.error("Playback failed", error);
-					setIsPlaying(false);
-				}
-			} else {
-				audioRef.current?.pause();
-			}
+		const setAudioData = () => {
+			setDuration(audioInstance.duration);
 		};
 
-		void playAudio();
-
-		if (audioRef.current) {
-			audioRef.current.volume = volume;
-		}
-
-		const handleEnded = () => {
-			setIsPlaying(false);
+		const setAudioTime = () => {
+			setCurrentTime(audioInstance.currentTime);
 		};
 
-		audioRef.current?.addEventListener("ended", handleEnded);
+		audioInstance.addEventListener("loadedmetadata", setAudioData);
+		audioInstance.addEventListener("timeupdate", setAudioTime);
+
+		// Start playing
+		if (isPlaying) {
+			audioInstance.play().catch(console.error);
+		}
+
+		// Add event listener for audio end
+		audioInstance.addEventListener("ended", () => setIsPlaying(false));
 
 		return () => {
-			audioRef.current?.removeEventListener("ended", handleEnded);
+			// Pause and clean up on unmount
+			audioInstance.pause();
+			audioInstance.removeEventListener("loadedmetadata", setAudioData);
+			audioInstance.removeEventListener("timeupdate", setAudioTime);
+			audioInstance.removeEventListener("ended", () => setIsPlaying(false));
 		};
-	}, [isPlaying, volume]);
+	}, [url, isPlaying]);
 
+	// Volume control
+	useEffect(() => {
+		const audioInstance = audioRef.current;
+		audioInstance.volume = volume;
+	}, [volume]);
+
+	// Play/Pause toggle
 	const togglePlayPause = () => {
 		setIsPlaying(!isPlaying);
 	};
+
+	// Stop audio when route changes
+	useEffect(() => {
+		const stopAudio = () => {
+			const audioInstance = audioRef.current;
+			if (isPlaying) {
+				audioInstance.pause();
+				setIsPlaying(false);
+			}
+		};
+
+		stopAudio();
+	}, [pathname]);
 
 	return (
 		<div className="flex items-center justify-between rounded bg-gray-100 p-4 text-black sm:flex-row">
@@ -101,7 +101,7 @@ export const Player = ({ url, name, image }: { url: string; name: string; image:
 			</Button>
 
 			<span className="flex-1 truncate">{name}</span>
-			<div className="mr-4 flex w-full items-center justify-end">
+			<div className="mr-4 flex w-full items-center justify-end gap-4">
 				<div className="w-full">
 					<SoundSlider
 						min={0}

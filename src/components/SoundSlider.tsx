@@ -13,9 +13,7 @@ export const SoundSlider = ({
 	onChange: (value: number) => void;
 	formatTime?: (time: number) => string;
 }) => {
-	const sliderFillStyle: React.CSSProperties = {
-		"--slider-fill-percentage": `${(value / max) * 100}%`,
-	};
+	const sliderFillPercentage = `${(value / max) * 100}%`;
 
 	return (
 		<div className="flex items-center">
@@ -27,11 +25,6 @@ export const SoundSlider = ({
 					</div>
 				)}
 				<div className="slider relative">
-					<div className="slider-track"></div>
-					<div
-						className="slider-fill"
-						style={{ width: sliderFillStyle["--slider-fill-percentage"] }}
-					></div>
 					<input
 						className="slider-thumb"
 						type="range"
@@ -40,7 +33,7 @@ export const SoundSlider = ({
 						value={value}
 						step={step}
 						onChange={(e) => onChange(Number(e.target.value))}
-						style={sliderFillStyle}
+						style={{ "--slider-fill-percentage": sliderFillPercentage }}
 					/>
 				</div>
 			</div>
