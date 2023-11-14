@@ -45,7 +45,9 @@ export default async function SingleProductPage({ params }: { params: { productI
 
 	return (
 		<main className="mx-auto mt-8 max-w-2xl px-4 pb-16 sm:px-6 sm:pb-24 lg:max-w-7xl lg:px-8">
-			<Breadcrumbs />
+			<>
+				<Breadcrumbs productId={product} />
+			</>
 			<div className="lg:grid lg:auto-rows-min lg:grid-cols-12 lg:gap-x-8">
 				{/* Image gallery */}
 				<div className="lg:col-span-5 lg:row-span-3 lg:mt-0">

@@ -1,48 +1,64 @@
 "use client";
 
 import { type UrlObject } from "url";
+import React, { useEffect, useState } from "react";
 import { Home, ArrowLeft } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import { ActiveLink } from "@/components/ActiveLink";
+import { getSingleProductById } from "@/api/products";
+import { type SingleProductType } from "@/types/singleProductTypes";
 
-export const Breadcrumbs = () => {
+export const Breadcrumbs = ({ productId }: { productId: SingleProductType }) => {
 	const router = useRouter();
 	const pathname = usePathname();
-	const breadcrumbPaths = pathname.split("/").filter((x) => x);
+	const [breadcrumbsData, setBreadcrumbsData] = useState([]);
 
-	const breadcrumbLinks = breadcrumbPaths.map((path, index, arr) => {
-		// Generate URL for each breadcrumb by joining the path parts
-		const href = "/" + arr.slice(0, index + 1).join("/");
-		// Last breadcrumb should not be a link
-		const isLast = index === breadcrumbPaths.length - 1;
+	useEffect(() => {
+		const loadProductData = async () => {
+			// Tylko dla ścieżki pojedynczego produktu
+			if (pathname.includes("/product/") && productId) {
+				const productData = await getSingleProductById(productId);
+				if (productData) {
+					// Ustaw breadcrumb dla kategorii
+					const categoryBreadcrumb = productData.categories.map((category) => ({
+						name: category.name,
+						slug: category.slug,
+						href: `/categories/${category.slug}`,
+					}));
 
-		return (
-			<>
-				<span key={href} className="flex items-center text-sm">
-					{!isLast ? (
-						<ActiveLink href={href as unknown as UrlObject} className="hover:text-yellow-600">
-							{path}
-						</ActiveLink>
-					) : (
-						<span className="font-semibold">{path}</span>
-					)}
-				</span>
-				{index < breadcrumbPaths.length - 1 && <span className="mx-1">/</span>}
-			</>
-		);
-	});
+					// Ustaw breadcrumb dla produktu
+					const productBreadcrumb = {
+						name:
+							productData.name.length > 20
+								? `${productData.name.substring(0, 17)}...`
+								: productData.name,
+						href: pathname,
+					};
+
+					setBreadcrumbsData([...categoryBreadcrumb, productBreadcrumb]);
+				}
+			}
+		};
+
+		void loadProductData();
+	}, [productId, pathname]);
 
 	return (
 		<nav aria-label="breadcrumbs" className="flex items-center text-sm">
 			<button onClick={() => router.back()} className="mr-1 flex items-center font-bold">
-				<ArrowLeft width={18} height={18} className="mr-1" /> Powrót
+				<ArrowLeft size={18} className="mr-1" /> Powrót
 			</button>
-			<span className="mx-1">/</span>
-			<ActiveLink href="/" className="items-cente mr-1 flex">
-				<Home width={18} height={18} className="mr-1  hover:text-yellow-600" />
-				<span>/</span>
+			<ActiveLink href="/" className="mr-1 flex items-center hover:text-yellow-600">
+				<Home size={18} className="mr-1" />
 			</ActiveLink>
-			{breadcrumbLinks}
+			{breadcrumbsData.map((crumb, index) => (
+				<React.Fragment key={index}>
+					<ActiveLink href={crumb.href as unknown as UrlObject} className="hover:text-yellow-600">
+						{crumb.name}
+					</ActiveLink>
+					{index < breadcrumbsData.length - 1 && <span className="mx-1">/</span>}
+				</React.Fragment>
+			))}
 		</nav>
 	);
 };
