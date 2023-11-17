@@ -9,9 +9,13 @@ export const ActivePaginationButton = ({ page }: { page: number }) => {
 	const pageNumberSegment = pathname.split("/").pop();
 	const currentPageFromPathname = pageNumberSegment ? parseInt(pageNumberSegment, 10) : 1;
 
-	return (
-		<Button variant="link" className={cn(page === currentPageFromPathname && "underline")}>
-			{page}
-		</Button>
-	);
+	const isActive = page === currentPageFromPathname;
+
+	const buttonClasses = cn("border-black border hover:text-white hover:bg-black", "text-black", {
+		"bg-white": !isActive,
+		"bg-black": isActive,
+		"text-white": isActive,
+	});
+
+	return <Button className={buttonClasses}>{page}</Button>;
 };

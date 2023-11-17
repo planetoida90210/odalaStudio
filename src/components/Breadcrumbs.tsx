@@ -16,7 +16,7 @@ export const Breadcrumbs = ({ category, productName }: BreadcrumbsType) => {
 			</button>
 			<span className="mx-1">/</span>
 			<ActiveLink href="/" className="mr-1 flex items-center hover:text-yellow-600">
-				<Home width={18} height={18} className="mr-1" />
+				<Home width={18} height={18} />
 			</ActiveLink>
 			{category && (
 				<>
