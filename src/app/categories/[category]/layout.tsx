@@ -31,12 +31,19 @@ export default async function CategoryLayout({
 	const numOfPages = Math.ceil((totalProducts?.length || 0) / 5);
 
 	return (
-		<>
-			<h1 className="mx-auto max-w-7xl pb-8 text-4xl font-extrabold first-letter:uppercase">
+		<div
+			style={{ minHeight: "calc(100vh - var(--navbar-height))" }}
+			className="mx-auto flex max-w-7xl flex-col"
+		>
+			<h1 className="mx-10 max-w-7xl pb-8 text-4xl font-extrabold first-letter:uppercase md:mx-16 lg:mx-24 xl:mx-32">
 				{params.category}
 			</h1>
-			<main className="mx-auto max-w-7xl">{children}</main>
-			<Pagination numOfPages={numOfPages} baseUrl={`categories/${params.category}`} />
-		</>
+			<div className="w-full flex-1 px-10 pb-2">
+				<main className="mx-auto max-w-7xl">{children}</main>
+			</div>
+			<div className="w-full pb-4 md:pb-6">
+				<Pagination numOfPages={numOfPages} baseUrl={`categories/${params.category}`} />
+			</div>
+		</div>
 	);
 }
