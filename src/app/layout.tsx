@@ -18,11 +18,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 		<html lang="pl" className="h-full">
 			<body className={`${inter.className} flex min-h-screen flex-col`}>
 				<Navbar />
-
 				<Sidebar />
-				<div className="flex-1" style={{ minHeight: "calc(100vh - var(--navbar-height))" }}>
-					{children}
-				</div>
+				<div style={{ minHeight: "calc(100vh - var(--navbar-height))" }}>{children}</div>
 				<Footer />
 			</body>
 		</html>

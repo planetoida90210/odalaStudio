@@ -26,13 +26,6 @@ export const Navbar = async () => {
 			<SearchInput />
 			<ul className="hidden items-center gap-4 space-x-2 md:flex" role="navigation">
 				<ActiveLink
-					href={"/"}
-					className="text-md border-b-2 border-b-transparent md:text-lg"
-					activeClassName="border-b-2 border-zinc-900 text-md md:text-lg font-semibold"
-				>
-					Nowości
-				</ActiveLink>
-				<ActiveLink
 					href={"/products"}
 					className="text-md border-b-2 border-b-transparent md:text-lg"
 					activeClassName="border-b-2 border-zinc-900 text-md md:text-lg font-semibold"

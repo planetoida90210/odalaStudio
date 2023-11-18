@@ -17,6 +17,9 @@ module.exports = {
 			},
 		},
 		extend: {
+			gridTemplateRows: {
+				"auto-1fr": "auto minmax(0, 1fr)",
+			},
 			colors: {
 				border: "hsl(var(--border))",
 				input: "hsl(var(--input))",
