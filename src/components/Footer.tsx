@@ -2,13 +2,13 @@ import Link from "next/link";
 
 const navigation = {
 	sklep: [
-		{ name: "Ubrania", href: "/" },
-		{ name: "Płyty", href: "/" },
-		{ name: "Beaty", href: "/" },
+		{ name: "Ubrania", href: "/categories/Ubrania/1" },
+		{ name: "Płyty", href: "/categories/Muzyka/1" },
+		{ name: "Beaty", href: "/categories/Beaty/1" },
 		{ name: "Nowości", href: "/" },
 	],
 	pomoc: [
-		{ name: "Polityka prywatności", href: "/" },
+		{ name: "Polityka prywatności", href: "/polityka-prywatnosci" },
 		{ name: "Regulamin", href: "/" },
 		{ name: "Zwroty i reklamacje", href: "/" },
 		{ name: "Kontakt", href: "/" },
