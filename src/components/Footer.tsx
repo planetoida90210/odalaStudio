@@ -9,7 +9,7 @@ const navigation = {
 	],
 	pomoc: [
 		{ name: "Polityka prywatności", href: "/polityka-prywatnosci" },
-		{ name: "Regulamin", href: "/" },
+		{ name: "Regulamin", href: "/regulamin" },
 		{ name: "Zwroty i reklamacje", href: "/" },
 		{ name: "Kontakt", href: "/" },
 	],
