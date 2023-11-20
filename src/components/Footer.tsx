@@ -11,7 +11,7 @@ const navigation = {
 		{ name: "Polityka prywatności", href: "/polityka-prywatnosci" },
 		{ name: "Regulamin", href: "/regulamin" },
 		{ name: "Zwroty i reklamacje", href: "/" },
-		{ name: "Kontakt", href: "/" },
+		{ name: "Kontakt", href: "/contact" },
 	],
 	informacje: [
 		{ name: "O nas", href: "/" },
