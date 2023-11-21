@@ -1,7 +1,8 @@
 import { type UrlObject } from "url";
-import { LucideShoppingBag } from "lucide-react";
+import { LucideShoppingBag, LucideUser } from "lucide-react";
 import Link from "next/link";
 
+import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import { Button } from "@/components/ui/button";
 import { ActiveLink } from "@/components/ActiveLink";
 import { SearchInput } from "@/components/SearchInput";
@@ -61,6 +62,16 @@ export const Navbar = async () => {
 					<span>{numOfItemsInBag}</span>
 				</Button>
 			</Link>
+			<SignedIn>
+				<UserButton afterSignOutUrl="/" />
+			</SignedIn>
+			<SignedOut>
+				<Link href="/sign-in">
+					<Button variant={"ghost"} className="flex gap-1 px-2">
+						<LucideUser className={"h-6 w-6 "} />
+					</Button>
+				</Link>
+			</SignedOut>
 		</nav>
 	);
 };
