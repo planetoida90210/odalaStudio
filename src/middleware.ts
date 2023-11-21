@@ -5,8 +5,6 @@ export default authMiddleware({
 		"/",
 		"/cart",
 		"/cart(.*)",
-		"/products",
-		"/products(.*)",
 		"/products/(.*)",
 		"/product/(.*)",
 		"/search",
