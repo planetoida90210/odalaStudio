@@ -5,6 +5,8 @@ export default authMiddleware({
 		"/",
 		"/cart",
 		"/cart(.*)",
+		"/products",
+		"/products(.*)",
 		"/products/(.*)",
 		"/product/(.*)",
 		"/search",
@@ -15,9 +17,11 @@ export default authMiddleware({
 		"/studio(.*)",
 		"/contact",
 		"/contact(.*)",
+		"/polityka-prywatnosci",
+		"/regulamin",
 	],
 });
 
 export const config = {
-	matcher: ["/((?!.*\\..*|_next).*)", "/"],
+	matcher: ["/((?!.+\\.[\\w]+$|_next).*)", "/", "/(api|trpc)(.*)"],
 };
