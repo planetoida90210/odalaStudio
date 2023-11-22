@@ -1,7 +1,7 @@
 import { getProductsList } from "@/api/products";
 import { ProductList } from "@/components/ProductList";
 
-export const dynamic = "force-static";
+export const dynamic = "force-dynamic";
 
 export async function generateStaticParams() {
 	const products = await getProductsList(0, 10);
