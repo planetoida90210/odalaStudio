@@ -6,8 +6,9 @@
 		"dev": "next dev",
 		"build": "next build",
 		"start": "next start",
-		"lint": "next lint --fix --dir src",
-		"codegen": "graphql-codegen --config .graphqlrc.ts"
+		"lint": "next lint --fix --dir src --cache-strategy content",
+		"codegen": "graphql-codegen --config .graphqlrc.ts",
+		"eslint-debug": "eslint src --debug"
 	},
 	"dependencies": {
 		"@clerk/localizations": "^1.26.10",
