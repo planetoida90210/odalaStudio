@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import Link from "next/link";
 
 import { Label } from "@/components/ui/label";
@@ -11,6 +14,11 @@ export const SizePicker = ({
 	currentSize?: string;
 	variants: SizeVariantType[];
 }) => {
+	const [activeSize, setActiveSize] = useState<string | null>(null);
+
+	const handleSizeClick = (size: string) => {
+		setActiveSize(size);
+	};
 	return (
 		<div className="mt-8">
 			<div className="flex items-center justify-between">
@@ -21,7 +29,7 @@ export const SizePicker = ({
 				<Label className="sr-only">Wybierz rozmiar</Label>
 				<div className="grid grid-cols-3 gap-3 sm:grid-cols-6">
 					{variants.map((variant) => (
-						<div key={variant.id}>
+						<div key={variant.id} onClick={() => handleSizeClick(variant.size)}>
 							<RadioGroupItem
 								value={variant.name}
 								id={variant.id}
@@ -30,9 +38,11 @@ export const SizePicker = ({
 							/>
 							<Label
 								htmlFor={variant.id}
-								className={`flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary ${
-									!variant.stock ? "cursor-not-allowed opacity-50" : ""
-								}`}
+								className={`flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover ${
+									activeSize === variant.size
+										? "bg-black text-white"
+										: "hover:bg-black/80 hover:text-white"
+								} ${!variant.stock ? "cursor-not-allowed opacity-50" : ""}`}
 							>
 								<Link
 									href={`?size=${variant.size}`}
