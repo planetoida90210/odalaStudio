@@ -1,5 +1,5 @@
 // page.tsx
-import React from "react";
+import React, { Suspense } from "react";
 import { type Metadata } from "next";
 import { StarIcon } from "lucide-react";
 import Image from "next/image";
@@ -11,6 +11,7 @@ import { ImageCarousel } from "@/components/ImageCarousel";
 import { Player } from "@/components/Player";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { StockIndicator } from "@/components/StockIndicator";
+import { ProductReviews } from "@/components/ProductReviews";
 
 export async function generateMetadata({
 	params,
@@ -140,6 +141,9 @@ export default async function SingleProductPage({
 					</div>
 				</div>
 			</div>
+			<Suspense>
+				<ProductReviews />
+			</Suspense>
 		</main>
 	);
 }

@@ -32,6 +32,7 @@ export const ColorPicker = ({
 									className={`flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover hover:bg-accent hover:text-accent-foreground peer-checked:border-primary [&:has(.peer-checked)]:border-primary`}
 								>
 									<Link
+										scroll={false}
 										href={`?color=${encodeURIComponent(variant.color)}`}
 										className="w-full p-4 text-center"
 										style={{
