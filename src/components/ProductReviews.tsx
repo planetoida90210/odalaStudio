@@ -34,9 +34,9 @@ export const ProductReviews = () => {
 			<div className="bg-zinc-100">
 				<div className="mx-auto max-w-2xl px-4 py-8 sm:px-6 sm:py-16 lg:grid lg:max-w-7xl lg:grid-cols-12 lg:gap-x-8 lg:px-8 lg:py-32">
 					<div className="lg:col-span-4">
-						<h2 className="text-2xl font-bold tracking-tight text-zinc-900">Customer Reviews</h2>
+						<h2 className="text-2xl font-bold tracking-tight text-zinc-900">Opinie klientów</h2>
 
-						{/* STARS AND BASED ON TEXT */}
+						{/* GWIAZDKI I TEKST "Bazując na ..." */}
 						<div className="mt-3 flex items-center">
 							<div>
 								<div className="flex items-center">
@@ -51,13 +51,13 @@ export const ProductReviews = () => {
 										/>
 									))}
 								</div>
-								<p className="sr-only">{reviews.average} out of 5 stars</p>
+								<p className="sr-only">{reviews.average} na 5 gwiazdek</p>
 							</div>
-							<p className="ml-2 text-sm text-zinc-900">Based on {reviews.totalCount} reviews</p>
+							<p className="ml-2 text-sm text-zinc-900">Bazując na {reviews.totalCount} opiniach</p>
 						</div>
-						{/* REVIEW STATS AND PERCENTAGES */}
+						{/* STATYSTYKI OPINII I PROCENTY */}
 						<div className="mt-6">
-							<h3 className="sr-only">Review data</h3>
+							<h3 className="sr-only">Dane opinii</h3>
 
 							<dl className="space-y-3">
 								{reviews.counts.map((count) => (
@@ -65,7 +65,7 @@ export const ProductReviews = () => {
 										<dt className="flex flex-1 items-center">
 											<p className="w-3 font-medium text-zinc-900">
 												{count.rating}
-												<span className="sr-only"> star reviews</span>
+												<span className="sr-only"> gwiazdki opinii</span>
 											</p>
 											<div aria-hidden="true" className="ml-1 flex flex-1 items-center">
 												<StarIcon
@@ -96,18 +96,21 @@ export const ProductReviews = () => {
 								))}
 							</dl>
 						</div>
-						{/* WRITE A REVIEW BUTTON */}
+						{/* PRZYCISK DODANIA OPINII */}
 						<div className="mt-10">
-							<h3 className="text-lg font-medium text-zinc-900">Share your thoughts</h3>
+							<h3 className="text-lg font-medium text-zinc-900">
+								Podziel się swoimi przemyśleniami
+							</h3>
 							<p className="mt-1 text-sm text-zinc-600">
-								If you’ve used this product, share your thoughts with other customers
+								Jeśli korzystałeś z tego produktu, podziel się swoimi przemyśleniami z innymi
+								klientami
 							</p>
 							<AddReviewForm />
 						</div>
 					</div>
-					{/* REVIEW LIST */}
+					{/* LISTA OPINII */}
 					<div className="mt-16 lg:col-span-7 lg:col-start-6 lg:mt-0">
-						<h3 className="sr-only">Recent reviews</h3>
+						<h3 className="sr-only">Najnowsze opinie</h3>
 
 						<div className="flow-root">
 							<div className="-my-12 divide-y divide-zinc-200">
@@ -133,7 +136,7 @@ export const ProductReviews = () => {
 														/>
 													))}
 												</div>
-												<p className="sr-only">{review.rating} out of 5 stars</p>
+												<p className="sr-only">{review.rating} na 5 gwiazdek</p>
 											</div>
 										</div>
 
