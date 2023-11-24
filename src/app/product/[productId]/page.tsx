@@ -10,6 +10,7 @@ import { ColorPicker } from "@/components/ColorPicker";
 import { ImageCarousel } from "@/components/ImageCarousel";
 import { Player } from "@/components/Player";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { StockIndicator } from "@/components/StockIndicator";
 
 export async function generateMetadata({
 	params,
@@ -34,7 +35,13 @@ export async function generateMetadata({
 	};
 }
 
-export default async function SingleProductPage({ params }: { params: { productId: string } }) {
+export default async function SingleProductPage({
+	params,
+	searchParams,
+}: {
+	params: { productId: string };
+	searchParams: { size: string; color: string };
+}) {
 	const product = await getSingleProductById(params.productId);
 	const productData = await getSingleProductById(params.productId);
 
@@ -43,6 +50,11 @@ export default async function SingleProductPage({ params }: { params: { productI
 	}
 
 	const sound = product.sound?.length ? product.sound[0] : null;
+	const selectedSize = searchParams.size;
+
+	const selectedVariant = product.productSizeVariants.find(
+		(variant) => variant.size === selectedSize,
+	);
 
 	return (
 		<main className="mx-auto mt-8 max-w-2xl px-4 pb-16 sm:px-6 sm:pb-24 lg:max-w-7xl lg:px-8">
@@ -94,6 +106,11 @@ export default async function SingleProductPage({ params }: { params: { productI
 							</div>
 						)}
 					</div>
+					{/* Stock indicator */}
+					<div className="flex justify-start">
+						{selectedVariant && <StockIndicator stock={selectedVariant.stock} />}
+					</div>
+
 					{/* Player above description on desktop */}
 					{sound && <Player url={sound.url} name={product.name} image={product.images[0].url} />}
 					{/* Product details */}

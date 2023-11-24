@@ -34,7 +34,11 @@ export const SizePicker = ({
 									!variant.stock ? "cursor-not-allowed opacity-50" : ""
 								}`}
 							>
-								<Link href={`?size=${variant.name}`} className="w-full p-4 text-center">
+								<Link
+									href={`?size=${variant.size}`}
+									scroll={false}
+									className="w-full p-4 text-center"
+								>
 									{variant.size}
 								</Link>
 							</Label>
