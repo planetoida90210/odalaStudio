@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import DOMPurify from "dompurify";
+import sanitizeHtml from "sanitize-html";
 import { StarIcon } from "lucide-react";
 import { type ReviewType } from "@/types/reviewType";
 import { AddReviewForm } from "@/components/AddReviewForm";
@@ -12,11 +12,6 @@ export const ProductReviews = ({ reviews }: ProductReviewsProps) => {
 	const averageRating = reviews.length
 		? reviews.reduce((acc, review) => acc + review.rating, 0) / reviews.length
 		: 0;
-
-	const sanitizeHTML = (dirtyHTML: string): string => {
-		// eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
-		return DOMPurify.sanitize(dirtyHTML) as unknown as string;
-	};
 
 	return (
 		<section aria-labelledby="reviews-heading" className="mt-8 sm:mt-16">
@@ -61,7 +56,8 @@ export const ProductReviews = ({ reviews }: ProductReviewsProps) => {
 						<div className="flow-root">
 							<div className="-my-12 divide-y divide-zinc-200">
 								{reviews.map((review) => {
-									const cleanHTML = sanitizeHTML(review.content);
+									/* eslint-disable @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access */
+									const cleanHTML = sanitizeHtml(review.content as unknown as string) as string;
 									return (
 										<div key={review.id} className="py-12">
 											<div className="flex items-center">
@@ -92,7 +88,7 @@ export const ProductReviews = ({ reviews }: ProductReviewsProps) => {
 
 											<div
 												className="mt-4 space-y-6 text-base italic text-zinc-600"
-												dangerouslySetInnerHTML={{ __html: cleanHTML }}
+												dangerouslySetInnerHTML={{ __html: cleanHTML as unknown as string }}
 											/>
 										</div>
 									);
