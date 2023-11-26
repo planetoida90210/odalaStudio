@@ -25,9 +25,10 @@ export const ProductReviews = ({ reviews }: ProductReviewsProps) => {
 								<div className="flex items-center">
 									{[0, 1, 2, 3, 4].map((rating) => (
 										<StarIcon
+											fill={averageRating > rating ? "#f9bc00" : "#D1D5DB"}
 											key={rating}
 											className={clsx(
-												averageRating > rating ? "text-orange-400" : "text-zinc-300",
+												averageRating > rating ? "text-[#f9bc00]" : "text-zinc-300",
 												"h-5 w-5 flex-shrink-0",
 											)}
 											aria-hidden="true"
@@ -73,9 +74,10 @@ export const ProductReviews = ({ reviews }: ProductReviewsProps) => {
 													<div className="mt-1 flex items-center">
 														{[0, 1, 2, 3, 4].map((rating) => (
 															<StarIcon
+																fill={review.rating > rating ? "#f9bc00" : "#D1D5DB"}
 																key={rating}
 																className={clsx(
-																	review.rating > rating ? "text-orange-400" : "text-zinc-300",
+																	review.rating > rating ? "text-[#f9bc00]" : "text-zinc-300",
 																	"h-5 w-5 flex-shrink-0",
 																)}
 																aria-hidden="true"
