@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import DOMPurify from "dompurify";
 import { StarIcon } from "lucide-react";
 import { type ReviewType } from "@/types/reviewType";
 import { AddReviewForm } from "@/components/AddReviewForm";
@@ -11,6 +12,11 @@ export const ProductReviews = ({ reviews }: ProductReviewsProps) => {
 	const averageRating = reviews.length
 		? reviews.reduce((acc, review) => acc + review.rating, 0) / reviews.length
 		: 0;
+
+	const sanitizeHTML = (dirtyHTML: string): string => {
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
+		return DOMPurify.sanitize(dirtyHTML) as unknown as string;
+	};
 
 	return (
 		<section aria-labelledby="reviews-heading" className="mt-8 sm:mt-16">
@@ -54,33 +60,43 @@ export const ProductReviews = ({ reviews }: ProductReviewsProps) => {
 						<h3 className="sr-only">Najnowsze opinie</h3>
 						<div className="flow-root">
 							<div className="-my-12 divide-y divide-zinc-200">
-								{reviews.map((review) => (
-									<div key={review.id} className="py-12">
-										<div className="flex items-center">
-											<div className="ml-4">
-												<h4 className="text-sm font-bold text-zinc-900">{review.name}</h4>
-												<div className="mt-1 flex items-center">
-													{[0, 1, 2, 3, 4].map((rating) => (
-														<StarIcon
-															key={rating}
-															className={clsx(
-																review.rating > rating ? "text-orange-400" : "text-zinc-300",
-																"h-5 w-5 flex-shrink-0",
-															)}
-															aria-hidden="true"
-														/>
-													))}
+								{reviews.map((review) => {
+									const cleanHTML = sanitizeHTML(review.content);
+									return (
+										<div key={review.id} className="py-12">
+											<div className="flex items-center">
+												<div className="ml-4">
+													<h4 className="text-sm font-bold text-zinc-900">{review.name}</h4>
+													<div className="flex items-center text-sm text-gray-500">
+														<p>{review.headline}</p>
+														<span aria-hidden="true" className="mx-1">
+															&middot;
+														</span>
+														<p>{new Date(review.createdAt).toLocaleDateString("pl-PL")}</p>
+													</div>
+													<div className="mt-1 flex items-center">
+														{[0, 1, 2, 3, 4].map((rating) => (
+															<StarIcon
+																key={rating}
+																className={clsx(
+																	review.rating > rating ? "text-orange-400" : "text-zinc-300",
+																	"h-5 w-5 flex-shrink-0",
+																)}
+																aria-hidden="true"
+															/>
+														))}
+													</div>
+													<p className="sr-only">{review.rating} na 5 gwiazdek</p>
 												</div>
-												<p className="sr-only">{review.rating} na 5 gwiazdek</p>
 											</div>
-										</div>
 
-										<div
-											className="mt-4 space-y-6 text-base italic text-zinc-600"
-											dangerouslySetInnerHTML={{ __html: review.content }}
-										/>
-									</div>
-								))}
+											<div
+												className="mt-4 space-y-6 text-base italic text-zinc-600"
+												dangerouslySetInnerHTML={{ __html: cleanHTML }}
+											/>
+										</div>
+									);
+								})}
 							</div>
 						</div>
 					</div>
