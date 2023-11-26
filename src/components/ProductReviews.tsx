@@ -57,7 +57,7 @@ export const ProductReviews = ({ reviews }: ProductReviewsProps) => {
 							<div className="-my-12 divide-y divide-zinc-200">
 								{reviews.map((review) => {
 									/* eslint-disable @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access */
-									const cleanHTML = sanitizeHtml(review.content as unknown as string) as string;
+									const cleanHTML = sanitizeHtml(review.content);
 									return (
 										<div key={review.id} className="py-12">
 											<div className="flex items-center">
