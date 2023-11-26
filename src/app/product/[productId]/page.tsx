@@ -142,7 +142,7 @@ export default async function SingleProductPage({
 				</div>
 			</div>
 			<Suspense>
-				<ProductReviews />
+				<ProductReviews reviews={product.reviews} />
 			</Suspense>
 		</main>
 	);
