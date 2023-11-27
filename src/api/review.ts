@@ -5,9 +5,17 @@ import {
 	ReviewPublishDocument,
 	ReviewGetByProductIdDocument,
 } from "@/gql/graphql";
-import { type ReviewType } from "@/types/reviewType";
 
-export const createReview = async (reviewData: ReviewType) => {
+type CreateReviewData = {
+	productId: string;
+	headline: string;
+	content: string;
+	rating: number;
+	name: string;
+	email: string;
+};
+
+export const createReview = async (reviewData: CreateReviewData) => {
 	const response = await executeGraphql(
 		ReviewCreateDocument,
 		{
@@ -16,7 +24,7 @@ export const createReview = async (reviewData: ReviewType) => {
 			email: reviewData.email,
 			content: reviewData.content,
 			rating: reviewData.rating,
-			id: reviewData.id,
+			id: reviewData.productId,
 		},
 		{
 			Authorization: `Bearer ${process.env.HYGRAPH_MUTATION_TOKEN}`,
