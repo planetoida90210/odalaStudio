@@ -20,6 +20,10 @@ const documents = {
     "query ProductGetSingleById($id: ID!) {\n  product(where: {id: $id}) {\n    id\n    name\n    description\n    createdAt\n    images {\n      id\n      url\n      size\n    }\n    price\n    slug\n    reviews {\n      content\n      createdAt\n      email\n      headline\n      name\n      id\n      rating\n    }\n    categories {\n      id\n      name\n      slug\n    }\n    productSizeVariants {\n      id\n      name\n      stock\n      size\n    }\n    productColorVariant {\n      color\n      id\n      name\n    }\n    sound {\n      id\n      mimeType\n      url\n      fileName\n    }\n  }\n}": types.ProductGetSingleByIdDocument,
     "query ProductsByName($name: String!) {\n  products(where: {name_contains: $name}) {\n    id\n    name\n    description\n    price\n    images {\n      url\n    }\n    categories {\n      id\n      name\n    }\n  }\n}": types.ProductsByNameDocument,
     "query ProductsGetList($first: Int, $skip: Int) {\n  products(first: $first, skip: $skip) {\n    id\n    name\n    description\n    price\n    categories {\n      name\n    }\n    images {\n      url\n    }\n  }\n}": types.ProductsGetListDocument,
+    "mutation ReviewCreate($id: ID!, $headline: String!, $name: String!, $email: String!, $content: String!, $rating: Int!) {\n  createReview(\n    data: {headline: $headline, name: $name, email: $email, content: $content, rating: $rating, product: {connect: {id: $id}}}\n  ) {\n    id\n  }\n}": types.ReviewCreateDocument,
+    "query ReviewGetByProductId($id: ID!) {\n  reviewsConnection(where: {product: {id: $id}}, orderBy: createdAt_ASC) {\n    edges {\n      node {\n        ...ReviewItem\n      }\n    }\n  }\n}": types.ReviewGetByProductIdDocument,
+    "fragment ReviewItem on Review {\n  id\n  name\n  headline\n  email\n  content\n  rating\n}": types.ReviewItemFragmentDoc,
+    "mutation ReviewPublish($id: ID!) {\n  publishReview(where: {id: $id}, to: PUBLISHED) {\n    ...ReviewItem\n  }\n}": types.ReviewPublishDocument,
 };
 
 /**
@@ -46,6 +50,22 @@ export function graphql(source: "query ProductsByName($name: String!) {\n  produ
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "query ProductsGetList($first: Int, $skip: Int) {\n  products(first: $first, skip: $skip) {\n    id\n    name\n    description\n    price\n    categories {\n      name\n    }\n    images {\n      url\n    }\n  }\n}"): typeof import('./graphql').ProductsGetListDocument;
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "mutation ReviewCreate($id: ID!, $headline: String!, $name: String!, $email: String!, $content: String!, $rating: Int!) {\n  createReview(\n    data: {headline: $headline, name: $name, email: $email, content: $content, rating: $rating, product: {connect: {id: $id}}}\n  ) {\n    id\n  }\n}"): typeof import('./graphql').ReviewCreateDocument;
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "query ReviewGetByProductId($id: ID!) {\n  reviewsConnection(where: {product: {id: $id}}, orderBy: createdAt_ASC) {\n    edges {\n      node {\n        ...ReviewItem\n      }\n    }\n  }\n}"): typeof import('./graphql').ReviewGetByProductIdDocument;
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "fragment ReviewItem on Review {\n  id\n  name\n  headline\n  email\n  content\n  rating\n}"): typeof import('./graphql').ReviewItemFragmentDoc;
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "mutation ReviewPublish($id: ID!) {\n  publishReview(where: {id: $id}, to: PUBLISHED) {\n    ...ReviewItem\n  }\n}"): typeof import('./graphql').ReviewPublishDocument;
 
 
 export function graphql(source: string) {
