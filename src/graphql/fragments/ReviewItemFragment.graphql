@@ -4,5 +4,6 @@ fragment ReviewItem on Review {
 	headline
 	email
 	content
+	createdAt
 	rating
 }

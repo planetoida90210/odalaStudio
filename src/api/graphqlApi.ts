@@ -5,10 +5,12 @@ export async function executeGraphql<TResult, TVariables>({
 	variables,
 	headers,
 	next,
+	cache,
 }: {
 	query: TypedDocumentString<TResult, TVariables>;
 	headers?: HeadersInit;
 	next?: NextFetchRequestConfig | undefined;
+	cache?: RequestCache;
 } & (TVariables extends { [_key: string]: never }
 	? { variables?: never }
 	: { variables: TVariables })): Promise<TResult> {
@@ -23,6 +25,7 @@ export async function executeGraphql<TResult, TVariables>({
 			variables,
 		}),
 		next,
+		cache,
 		headers: {
 			...headers,
 			"Content-Type": "application/json",

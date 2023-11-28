@@ -17,7 +17,7 @@ export type Scalars = {
   /** A date string, such as 2007-12-03 (YYYY-MM-DD), compliant with ISO 8601 standard for representation of dates using the Gregorian calendar. */
   Date: { input: unknown; output: unknown; }
   /** A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the date-timeformat outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representationof dates and times using the Gregorian calendar. */
-  DateTime: { input: unknown; output: unknown; }
+  DateTime: { input: string; output: string; }
   Hex: { input: unknown; output: unknown; }
   /** Raw JSON value */
   Json: { input: unknown; output: unknown; }
@@ -9989,7 +9989,7 @@ export type ProductGetSingleByIdQueryVariables = Exact<{
 }>;
 
 
-export type ProductGetSingleByIdQuery = { product?: { id: string, name: string, description: string, createdAt: unknown, price: number, slug: string, images: Array<{ id: string, url: string, size?: number | null }>, reviews: Array<{ content: string, createdAt: unknown, email: string, headline: string, name: string, id: string, rating?: number | null }>, categories: Array<{ id: string, name: string, slug: string }>, productSizeVariants: Array<{ id: string, name: string, stock?: number | null, size: ProductSize }>, productColorVariant?: { color: ProductColor, id: string, name: string } | null, sound: Array<{ id: string, mimeType?: string | null, url: string, fileName: string }> } | null };
+export type ProductGetSingleByIdQuery = { product?: { id: string, name: string, description: string, createdAt: string, price: number, slug: string, images: Array<{ id: string, url: string, size?: number | null }>, reviews: Array<{ content: string, createdAt: string, email: string, headline: string, name: string, id: string, rating?: number | null }>, categories: Array<{ id: string, name: string, slug: string }>, productSizeVariants: Array<{ id: string, name: string, stock?: number | null, size: ProductSize }>, productColorVariant?: { color: ProductColor, id: string, name: string } | null, sound: Array<{ id: string, mimeType?: string | null, url: string, fileName: string }> } | null };
 
 export type ProductsByNameQueryVariables = Exact<{
   name: Scalars['String']['input'];
@@ -10023,16 +10023,16 @@ export type ReviewGetByProductIdQueryVariables = Exact<{
 }>;
 
 
-export type ReviewGetByProductIdQuery = { reviewsConnection: { edges: Array<{ node: { id: string, name: string, headline: string, email: string, content: string, rating?: number | null } }> } };
-
-export type ReviewItemFragment = { id: string, name: string, headline: string, email: string, content: string, rating?: number | null };
+export type ReviewGetByProductIdQuery = { reviewsConnection: { edges: Array<{ node: { id: string, name: string, headline: string, email: string, content: string, createdAt: string, rating?: number | null } }> } };
 
 export type ReviewPublishMutationVariables = Exact<{
   id: Scalars['ID']['input'];
 }>;
 
 
-export type ReviewPublishMutation = { publishReview?: { id: string, name: string, headline: string, email: string, content: string, rating?: number | null } | null };
+export type ReviewPublishMutation = { publishReview?: { id: string, name: string, headline: string, email: string, content: string, createdAt: string, rating?: number | null } | null };
+
+export type ReviewItemFragment = { id: string, name: string, headline: string, email: string, content: string, createdAt: string, rating?: number | null };
 
 export class TypedDocumentString<TResult, TVariables>
   extends String
@@ -10055,6 +10055,7 @@ export const ReviewItemFragmentDoc = new TypedDocumentString(`
   headline
   email
   content
+  createdAt
   rating
 }
     `, {"fragmentName":"ReviewItem"}) as unknown as TypedDocumentString<ReviewItemFragment, unknown>;
@@ -10207,6 +10208,7 @@ export const ReviewGetByProductIdDocument = new TypedDocumentString(`
   headline
   email
   content
+  createdAt
   rating
 }`) as unknown as TypedDocumentString<ReviewGetByProductIdQuery, ReviewGetByProductIdQueryVariables>;
 export const ReviewPublishDocument = new TypedDocumentString(`
@@ -10221,5 +10223,6 @@ export const ReviewPublishDocument = new TypedDocumentString(`
   headline
   email
   content
+  createdAt
   rating
 }`) as unknown as TypedDocumentString<ReviewPublishMutation, ReviewPublishMutationVariables>;

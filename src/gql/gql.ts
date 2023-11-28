@@ -22,8 +22,8 @@ const documents = {
     "query ProductsGetList($first: Int, $skip: Int) {\n  products(first: $first, skip: $skip) {\n    id\n    name\n    description\n    price\n    categories {\n      name\n    }\n    images {\n      url\n    }\n  }\n}": types.ProductsGetListDocument,
     "mutation ReviewCreate($id: ID!, $headline: String!, $name: String!, $email: String!, $content: String!, $rating: Int!) {\n  createReview(\n    data: {headline: $headline, name: $name, email: $email, content: $content, rating: $rating, product: {connect: {id: $id}}}\n  ) {\n    id\n  }\n}": types.ReviewCreateDocument,
     "query ReviewGetByProductId($id: ID!) {\n  reviewsConnection(where: {product: {id: $id}}, orderBy: createdAt_ASC) {\n    edges {\n      node {\n        ...ReviewItem\n      }\n    }\n  }\n}": types.ReviewGetByProductIdDocument,
-    "fragment ReviewItem on Review {\n  id\n  name\n  headline\n  email\n  content\n  rating\n}": types.ReviewItemFragmentDoc,
     "mutation ReviewPublish($id: ID!) {\n  publishReview(where: {id: $id}, to: PUBLISHED) {\n    ...ReviewItem\n  }\n}": types.ReviewPublishDocument,
+    "fragment ReviewItem on Review {\n  id\n  name\n  headline\n  email\n  content\n  createdAt\n  rating\n}": types.ReviewItemFragmentDoc,
 };
 
 /**
@@ -61,11 +61,11 @@ export function graphql(source: "query ReviewGetByProductId($id: ID!) {\n  revie
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "fragment ReviewItem on Review {\n  id\n  name\n  headline\n  email\n  content\n  rating\n}"): typeof import('./graphql').ReviewItemFragmentDoc;
+export function graphql(source: "mutation ReviewPublish($id: ID!) {\n  publishReview(where: {id: $id}, to: PUBLISHED) {\n    ...ReviewItem\n  }\n}"): typeof import('./graphql').ReviewPublishDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "mutation ReviewPublish($id: ID!) {\n  publishReview(where: {id: $id}, to: PUBLISHED) {\n    ...ReviewItem\n  }\n}"): typeof import('./graphql').ReviewPublishDocument;
+export function graphql(source: "fragment ReviewItem on Review {\n  id\n  name\n  headline\n  email\n  content\n  createdAt\n  rating\n}"): typeof import('./graphql').ReviewItemFragmentDoc;
 
 
 export function graphql(source: string) {

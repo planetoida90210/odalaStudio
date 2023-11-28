@@ -5,14 +5,14 @@ import Link from "next/link";
 
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { type SizeVariantType } from "@/types/singleProductTypes";
+import { type ProductSizeVariant } from "@/gql/graphql";
 
 export const SizePicker = ({
 	currentSize,
 	variants,
 }: {
 	currentSize?: string;
-	variants: SizeVariantType[];
+	variants: ProductSizeVariant[];
 }) => {
 	const [activeSize, setActiveSize] = useState<string | null>(null);
 

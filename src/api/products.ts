@@ -3,13 +3,13 @@ import { executeGraphql } from "@/api/graphqlApi";
 import {
 	ProductGetByIdDocument,
 	ProductGetSingleByIdDocument,
+	type ProductGetSingleByIdQuery,
 	ProductsByCategoryIdDocument,
 	ProductsByNameDocument,
 	ProductsGetListDocument,
 } from "@/gql/graphql";
 import { getIdByName } from "@/lib/utils";
 import { type ProductItemType } from "@/types/productItemType";
-import { type SingleProductType } from "@/types/singleProductTypes";
 
 export const getProductsList = async (
 	first?: number,
@@ -88,59 +88,15 @@ export const getProductsByCategoryId = async (
 	});
 };
 
-export const getSingleProductById = async (id: string): Promise<SingleProductType | null> => {
-	const graphqlResponse = await executeGraphql({
+export const getSingleProductById = async (
+	id: string,
+): Promise<ProductGetSingleByIdQuery["product"] | null> => {
+	const response = await executeGraphql({
 		query: ProductGetSingleByIdDocument,
 		variables: { id },
 	});
 
-	if (!graphqlResponse.product) {
-		return null;
-	}
-
-	const product = graphqlResponse.product as SingleProductType;
-
-	return {
-		id: product.id,
-		name: product.name,
-		description: product.description,
-		createdAt: String(product.createdAt),
-		images: product.images.map((image) => ({
-			id: image.id,
-			url: image.url,
-		})),
-		price: product.price,
-		slug: product.slug,
-		reviews: product.reviews.map((review) => ({
-			...review,
-			createdAt: String(review.createdAt),
-			rating: review.rating || 0,
-		})),
-		categories: product.categories.map((category) => ({
-			id: category.id,
-			name: category.name,
-			slug: category.slug,
-		})),
-		productSizeVariants: product.productSizeVariants.map((variant) => ({
-			id: variant.id,
-			name: variant.name,
-			size: variant.size,
-			stock: variant.stock || 0,
-		})),
-		productColorVariant: product.productColorVariant
-			? {
-					id: product.productColorVariant.id,
-					name: product.productColorVariant.name,
-					color: product.productColorVariant.color,
-			  }
-			: null,
-		sound: product.sound?.map((s) => ({
-			id: s.id,
-			mimeType: s.mimeType,
-			url: s.url,
-			fileName: s.fileName,
-		})),
-	};
+	return response.product || null;
 };
 
 export const getProductsByName = async (name: string): Promise<ProductItemType[]> => {

@@ -11,7 +11,9 @@ import { ImageCarousel } from "@/components/ImageCarousel";
 import { Player } from "@/components/Player";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { StockIndicator } from "@/components/StockIndicator";
-import { ProductReviews } from "@/components/ProductReviews";
+import { SingleProductReviews } from "@/components/SingleProductReviews";
+import { type SimplifiedProductSizeVariant } from "@/types/simplifiedProductSizeVariant";
+import { type ProductColorVariant, type ProductSizeVariant } from "@/gql/graphql";
 
 export async function generateMetadata({
 	params,
@@ -51,10 +53,19 @@ export default async function SingleProductPage({
 	}
 
 	const sound = product.sound?.length ? product.sound[0] : null;
-	const selectedSize = searchParams.size;
+	// const selectedSize = searchParams.size;
 
 	const selectedVariant = product.productSizeVariants.find(
-		(variant) => variant.size === selectedSize,
+		(variant) => variant.size === searchParams.size,
+	);
+	const sizeVariantsForPicker: SimplifiedProductSizeVariant[] = product.productSizeVariants.map(
+		(variant) => ({
+			id: variant.id,
+			name: variant.name,
+			size: variant.size,
+			stock: variant.stock,
+			// Tutaj możesz dodać przekształcenia dla innych używanych pól
+		}),
 	);
 
 	return (
@@ -96,14 +107,17 @@ export default async function SingleProductPage({
 						{product.productColorVariant && (
 							<div className="mb-4">
 								<ColorPicker
-									variants={[product.productColorVariant]}
+									variants={[product.productColorVariant] as unknown as ProductColorVariant[]}
 									currentColor={product.productColorVariant.name}
 								/>
 							</div>
 						)}
 						{product.productSizeVariants.length > 0 && (
 							<div className="mb-4">
-								<SizePicker variants={product.productSizeVariants} />
+								<SizePicker
+									variants={sizeVariantsForPicker as unknown as ProductSizeVariant[]}
+									currentSize={selectedVariant?.size}
+								/>
 							</div>
 						)}
 					</div>
@@ -142,7 +156,7 @@ export default async function SingleProductPage({
 				</div>
 			</div>
 			<Suspense>
-				<ProductReviews reviews={product.reviews} />
+				<SingleProductReviews productId={params.productId} />
 			</Suspense>
 		</main>
 	);

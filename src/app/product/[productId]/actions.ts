@@ -10,6 +10,7 @@ export const addReviewAction = async (productId: string, formData: FormData) => 
 		rating: Number(formData.get("rating")),
 		name: String(formData.get("name")),
 		email: String(formData.get("email")),
+		createdAt: new Date().toISOString(),
 	};
 
 	const { createReview: reviewId } = await createReview(reviewForm);

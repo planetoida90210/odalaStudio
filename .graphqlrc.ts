@@ -7,7 +7,7 @@ const config: CodegenConfig = {
 	schema: process.env.GRAPHQL_URL,
 	overwrite: true,
 	ignoreNoDocuments: true,
-	documents: "src/graphql/*.graphql",
+	documents: "src/graphql/**/*.graphql",
 	generates: {
 		"src/gql/": {
 			preset: "client",
@@ -18,6 +18,9 @@ const config: CodegenConfig = {
 				useTypeImports: true,
 				enumsAsTypes: true,
 				defaultScalarType: "unknown",
+				scalars: {
+					DateTime: "string",
+				},
 				skipTypename: true,
 				documentMode: "string",
 			},

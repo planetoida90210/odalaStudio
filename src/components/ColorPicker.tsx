@@ -1,14 +1,14 @@
 import Link from "next/link";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { type ColorVariantType } from "@/types/singleProductTypes";
+import { type ProductColorVariant } from "@/gql/graphql";
 
 export const ColorPicker = ({
 	currentColor,
 	variants,
 }: {
 	currentColor?: string;
-	variants: ColorVariantType[];
+	variants: ProductColorVariant[];
 }) => {
 	return (
 		<div className="mt-8">
