@@ -11,9 +11,9 @@ import { ImageCarousel } from "@/components/ImageCarousel";
 import { Player } from "@/components/Player";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { StockIndicator } from "@/components/StockIndicator";
-import { SingleProductReviews } from "@/components/SingleProductReviews";
 import { type SimplifiedProductSizeVariant } from "@/types/simplifiedProductSizeVariant";
 import { type ProductColorVariant, type ProductSizeVariant } from "@/gql/graphql";
+import { ProductReviews } from "@/components/ProductReviews";
 
 export async function generateMetadata({
 	params,
@@ -156,7 +156,7 @@ export default async function SingleProductPage({
 				</div>
 			</div>
 			<Suspense>
-				<SingleProductReviews productId={params.productId} />
+				<ProductReviews productId={params.productId} />
 			</Suspense>
 		</main>
 	);

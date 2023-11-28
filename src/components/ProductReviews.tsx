@@ -1,16 +1,16 @@
 import clsx from "clsx";
 import sanitizeHtml from "sanitize-html";
 import { StarIcon } from "lucide-react";
-import { type ReviewType } from "@/types/reviewType";
+
 import { AddReviewForm } from "@/components/AddReviewForm";
 
-type ProductReviewsProps = {
-	reviews: ReviewType[];
-};
+import { getProductReview } from "@/api/review";
 
-export const ProductReviews = ({ reviews }: ProductReviewsProps) => {
+export const ProductReviews = async ({ productId }: { productId: string }) => {
+	const reviews = await getProductReview(productId);
+
 	const averageRating = reviews.length
-		? reviews.reduce((acc, review) => acc + review.rating, 0) / reviews.length
+		? reviews.reduce((acc, review) => acc + (review.rating || 0), 0) / reviews.length
 		: 0;
 
 	return (
@@ -57,6 +57,7 @@ export const ProductReviews = ({ reviews }: ProductReviewsProps) => {
 						<div className="flow-root">
 							<div className="-my-12 divide-y divide-zinc-200">
 								{reviews.map((review) => {
+									const reviewRating = review.rating || 0;
 									/* eslint-disable @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access */
 									const cleanHTML = sanitizeHtml(review.content);
 									return (
@@ -74,10 +75,10 @@ export const ProductReviews = ({ reviews }: ProductReviewsProps) => {
 													<div className="mt-1 flex items-center">
 														{[0, 1, 2, 3, 4].map((rating) => (
 															<StarIcon
-																fill={review.rating > rating ? "#f9bc00" : "#D1D5DB"}
+																fill={reviewRating > rating ? "#f9bc00" : "#D1D5DB"}
 																key={rating}
 																className={clsx(
-																	review.rating > rating ? "text-[#f9bc00]" : "text-zinc-300",
+																	reviewRating > rating ? "text-[#f9bc00]" : "text-zinc-300",
 																	"h-5 w-5 flex-shrink-0",
 																)}
 																aria-hidden="true"
