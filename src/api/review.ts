@@ -1,51 +1,48 @@
 import { executeGraphql } from "@/api/graphqlApi";
-
 import {
+	type ReviewItemFragment,
 	ReviewCreateDocument,
 	ReviewPublishDocument,
 	ReviewGetByProductIdDocument,
 } from "@/gql/graphql";
 
-type CreateReviewData = {
-	productId: string;
-	headline: string;
-	content: string;
-	rating: number;
-	name: string;
-	email: string;
-};
-
-export const createReview = async (reviewData: CreateReviewData) => {
-	const response = await executeGraphql(
-		ReviewCreateDocument,
-		{
-			headline: reviewData.headline,
-			name: reviewData.name,
-			email: reviewData.email,
-			content: reviewData.content,
-			rating: reviewData.rating,
-			id: reviewData.productId,
+export const getProductReview = async (id: string) => {
+	const reviewsResponse = await executeGraphql({
+		query: ReviewGetByProductIdDocument,
+		variables: {
+			id,
 		},
-		{
+		next: { tags: ["review"] },
+	});
+
+	const review = reviewsResponse.reviewsConnection.edges.map((review) => review.node);
+
+	return review;
+};
+export const createReview = async (review: ReviewItemFragment) => {
+	const rating = review.rating || 0;
+	const reviewId = await executeGraphql({
+		query: ReviewCreateDocument,
+		variables: {
+			...review,
+			rating,
+		},
+		headers: {
 			Authorization: `Bearer ${process.env.HYGRAPH_MUTATION_TOKEN}`,
 		},
-	);
+	});
 
-	return response?.createReview?.id;
+	return reviewId;
 };
 
-export const publishReview = async (reviewId: string) => {
-	await executeGraphql(
-		ReviewPublishDocument,
-		{ id: reviewId },
-		{
+export const publishReview = async (reviewID: string) => {
+	await executeGraphql({
+		query: ReviewPublishDocument,
+		variables: {
+			id: reviewID,
+		},
+		headers: {
 			Authorization: `Bearer ${process.env.HYGRAPH_MUTATION_TOKEN}`,
 		},
-	);
-};
-
-export const getProductReviews = async (productId: string) => {
-	const response = await executeGraphql(ReviewGetByProductIdDocument, { id: productId });
-
-	return response.reviewsConnection.edges.map((edge) => edge.node);
+	});
 };

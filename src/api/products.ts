@@ -15,7 +15,10 @@ export const getProductsList = async (
 	first?: number,
 	skip?: number,
 ): Promise<ProductItemType[]> => {
-	const graphqlResponse = await executeGraphql(ProductsGetListDocument, { first, skip });
+	const graphqlResponse = await executeGraphql({
+		query: ProductsGetListDocument,
+		variables: { first, skip },
+	});
 	return graphqlResponse.products.map((product) => {
 		return {
 			id: product.id,
@@ -31,7 +34,10 @@ export const getProductsList = async (
 };
 
 export const getProductById = async (id: string): Promise<ProductItemType | null> => {
-	const graphqlResponse = await executeGraphql(ProductGetByIdDocument, { id });
+	const graphqlResponse = await executeGraphql({
+		query: ProductGetByIdDocument,
+		variables: { id },
+	});
 
 	if (!graphqlResponse.product) {
 		return null;
@@ -57,14 +63,10 @@ export const getProductsByCategoryId = async (
 	skip?: number,
 ): Promise<ProductItemType[] | null> => {
 	const categoryId = await getIdByName(categoryName);
-	if (!categoryId) {
-		return null;
-	}
-
-	const graphqlResponse = await executeGraphql(ProductsByCategoryIdDocument, {
-		id: categoryId,
-		first,
-		skip,
+	if (!categoryId) return null;
+	const graphqlResponse = await executeGraphql({
+		query: ProductsByCategoryIdDocument,
+		variables: { id: categoryId, first, skip },
 	});
 
 	if (!graphqlResponse.category || !graphqlResponse.category.products) {
@@ -87,7 +89,11 @@ export const getProductsByCategoryId = async (
 };
 
 export const getSingleProductById = async (id: string): Promise<SingleProductType | null> => {
-	const graphqlResponse = await executeGraphql(ProductGetSingleByIdDocument, { id });
+	const graphqlResponse = await executeGraphql({
+		query: ProductGetSingleByIdDocument,
+		variables: { id },
+	});
+
 	if (!graphqlResponse.product) {
 		return null;
 	}
@@ -138,7 +144,10 @@ export const getSingleProductById = async (id: string): Promise<SingleProductTyp
 };
 
 export const getProductsByName = async (name: string): Promise<ProductItemType[]> => {
-	const graphqlResponse = await executeGraphql(ProductsByNameDocument, { name });
+	const graphqlResponse = await executeGraphql({
+		query: ProductsByNameDocument,
+		variables: { name },
+	});
 
 	if (!graphqlResponse.products) {
 		redirect("/");
