@@ -48,7 +48,7 @@ export const ProductReviews = async ({ productId }: { productId: string }) => {
 								Jeśli korzystałeś z tego produktu, podziel się swoimi przemyśleniami z innymi
 								klientami
 							</p>
-							<AddReviewForm />
+							<AddReviewForm productId={productId} reviews={reviews} />
 						</div>
 					</div>
 

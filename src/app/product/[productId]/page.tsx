@@ -53,7 +53,6 @@ export default async function SingleProductPage({
 	}
 
 	const sound = product.sound?.length ? product.sound[0] : null;
-	// const selectedSize = searchParams.size;
 
 	const selectedVariant = product.productSizeVariants.find(
 		(variant) => variant.size === searchParams.size,
@@ -64,7 +63,6 @@ export default async function SingleProductPage({
 			name: variant.name,
 			size: variant.size,
 			stock: variant.stock,
-			// Tutaj możesz dodać przekształcenia dla innych używanych pól
 		}),
 	);
 
