@@ -1,49 +1,12 @@
 "use client";
 
-import { useOptimistic, useRef, useState } from "react";
 import { Button } from "./ui/button";
 import { Textarea } from "./ui/textarea";
 import { Input } from "./ui/input";
-import { type ReviewItemFragment } from "@/gql/graphql";
 
-export const AddReviewForm = ({
-	productId,
-	reviews,
-}: {
-	productId: string;
-	reviews: ReviewItemFragment[];
-}) => {
-	const ref = useRef<HTMLFormElement>(null);
-
-	const [optimisticReview, setOptimisticReview] = useOptimistic(
-		reviews,
-		(state, review: ReviewItemFragment) => [...state, review],
-	);
-
-	async function addOptimisticReviews(formData: FormData) {
-		const newReview: ReviewItemFragment = {
-			id: productId,
-			headline: String(formData.get("headline")),
-			content: String(formData.get("content")),
-			rating: Number(formData.get("rating")),
-			name: String(formData.get("name")),
-			email: String(formData.get("email")),
-			createdAt: new Date().toISOString(),
-		};
-
-		setOptimisticReview(newReview);
-		await addReviewAction(productId, formData);
-
-		ref.current?.reset();
-	}
-
+export const AddReviewForm = ({}: {}) => {
 	return (
-		<form
-			ref={ref}
-			action={void addOptimisticReviews}
-			data-testid="add-review-form"
-			className="space-y-4 pt-5"
-		>
+		<form data-testid="add-review-form" className="space-y-4 pt-5">
 			<Input
 				type="text"
 				name="headline"
