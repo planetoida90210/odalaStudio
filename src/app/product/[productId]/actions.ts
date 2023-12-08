@@ -1,3 +1,4 @@
+"use server";
 import { revalidateTag } from "next/cache";
 import { createReview, publishReview } from "@/api/review";
 import { type ReviewItemFragment } from "@/gql/graphql";

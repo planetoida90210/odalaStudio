@@ -3,7 +3,7 @@ import sanitizeHtml from "sanitize-html";
 import { StarIcon } from "lucide-react";
 
 import { Review } from "@/components/Review";
-import { AddReviewForm } from "@/components/AddReviewForm";
+// import { AddReviewForm } from "@/components/AddReviewForm";
 
 import { getProductReview } from "@/api/review";
 
@@ -49,7 +49,7 @@ export const ProductReviews = async ({ productId }: { productId: string }) => {
 								Jeśli korzystałeś z tego produktu, podziel się swoimi przemyśleniami z innymi
 								klientami
 							</p>
-							<AddReviewForm productId={productId} reviews={reviews} />
+							{/* <AddReviewForm productId={productId} reviews={reviews} /> */}
 						</div>
 					</div>
 
