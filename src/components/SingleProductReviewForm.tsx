@@ -179,6 +179,7 @@ import { StarIcon } from "lucide-react";
 import sanitizeHtml from "sanitize-html";
 
 import { Button } from "./ui/button";
+import { RatingStarsForm } from "./RatingStarsForm";
 import { Review } from "@/components/Review";
 import { type ReviewItemFragment } from "@/gql/graphql";
 import { addReviewAction } from "@/app/product/[productId]/actions";
@@ -192,6 +193,7 @@ export const SingleProductReviewForm = ({
 }) => {
 	const ref = useRef<HTMLFormElement>(null);
 	const [currentReviews, setCurrentReviews] = useState(reviews);
+	const [stars, setStars] = useState(1);
 
 	const averageRating = currentReviews.length
 		? currentReviews.reduce((acc, review) => acc + (review.rating || 0), 0) / currentReviews.length
@@ -218,6 +220,7 @@ export const SingleProductReviewForm = ({
 		}
 
 		ref.current?.reset();
+		setStars(1);
 	}
 
 	return (
@@ -280,14 +283,9 @@ export const SingleProductReviewForm = ({
 									/>
 								</div>
 								<div className="flex flex-col space-y-1">
-									<label htmlFor="rating" className="text-sm font-medium text-gray-900">
-										Ocena 1-5
-									</label>
-									<input
-										type="text"
-										name="rating"
-										id="rating"
-										className="block w-full rounded-md border border-gray-300 px-4 py-2 focus:border-blue-500 focus:ring-blue-500"
+									<RatingStarsForm
+										value={stars}
+										onClick={(selectedStars) => setStars(selectedStars)}
 									/>
 								</div>
 								<div className="flex flex-col space-y-1">
