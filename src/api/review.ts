@@ -31,7 +31,7 @@ export const createReview = async (review: ReviewItemFragment) => {
 			Authorization: `Bearer ${process.env.HYGRAPH_MUTATION_TOKEN}`,
 		},
 	});
-
+	console.log("Review created:", reviewId);
 	return reviewId;
 };
 
@@ -45,4 +45,5 @@ export const publishReview = async (reviewID: string) => {
 			Authorization: `Bearer ${process.env.HYGRAPH_MUTATION_TOKEN}`,
 		},
 	});
+	console.log("Review published:", reviewID);
 };
