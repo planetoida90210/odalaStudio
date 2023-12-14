@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 "use client";
 import clsx from "clsx";
 import React, { useOptimistic, useRef, useState } from "react";
@@ -83,6 +84,7 @@ export const SingleProductReviewForm = ({
 							Jeśli korzystałeś z tego produktu, podziel się swoimi przemyśleniami z innymi
 							klientami
 						</p>
+
 						<form ref={ref} action={addOptimisticReviews} data-testid="add-review-form">
 							<div className="flex flex-col space-y-4 pt-5">
 								{" "}
